@@ -1,0 +1,20 @@
+[inst #1] addi $1,$0,1
+Register Write to Reg: 0x01 Val: 0x00000001
+[inst #2] nop 
+[inst #3] nop 
+[inst #4] beq $1,$2,8
+[inst #5] nop 
+[inst #6] nop 
+[inst #7] lui $1,64
+Register Write to Reg: 0x01 Val: 0x00400000
+[inst #8] addi $2,$0,1
+Register Write to Reg: 0x02 Val: 0x00000001
+[inst #9] nop 
+[inst #10] jr $1
+[inst #11] addi $1,$0,1
+Register Write to Reg: 0x01 Val: 0x00000001
+[inst #12] nop 
+[inst #13] nop 
+[inst #14] beq $1,$2,8
+[inst #15] halt 
+

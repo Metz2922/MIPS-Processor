@@ -1,0 +1,32 @@
+[inst #1] addi $8,$0,32767
+Register Write to Reg: 0x08 Val: 0x00007FFF
+[inst #2] nop 
+[inst #3] nop 
+[inst #4] addi $8,$8,1
+Register Write to Reg: 0x08 Val: 0x00008000
+[inst #5] nop 
+[inst #6] nop 
+[inst #7] addi $9,$8,-1
+Register Write to Reg: 0x09 Val: 0x00007FFF
+[inst #8] nop 
+[inst #9] nop 
+[inst #10] addi $9,$9,2
+Register Write to Reg: 0x09 Val: 0x00008001
+[inst #11] addi $11,$0,-32767
+Register Write to Reg: 0x0B Val: 0xFFFF8001
+[inst #12] nop 
+[inst #13] nop 
+[inst #14] addi $12,$11,-32767
+Register Write to Reg: 0x0C Val: 0xFFFF0002
+[inst #15] addi $13,$0,32767
+Register Write to Reg: 0x0D Val: 0x00007FFF
+[inst #16] addi $14,$13,32767
+Register Write to Reg: 0x0E Val: 0x0000FFFE
+[inst #17] lui $1,-19920
+Register Write to Reg: 0x01 Val: 0xB2300000
+[inst #18] ori $1,$1,52792
+Register Write to Reg: 0x01 Val: 0xB230CE38
+[inst #19] add $4,$0,$1
+Register Write to Reg: 0x04 Val: 0xB230CE38
+[inst #20] halt 
+

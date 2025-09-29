@@ -1,0 +1,90 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+  
+
+entity ctrl_logic is
+port 	(opcode : in std_logic_vector(5 downto 0);
+	 RegDst : out std_logic;
+	 AluSrc : out std_logic;	
+	 MemToReg : out std_logic;
+	 RegWrite : out std_logic;
+	 MemRead : out std_logic;
+	 MemWrite : out std_logic;
+	 Branch : out std_logic;
+	 Jump	: out std_logic;
+	 BNE	: out std_logic;
+	 Halt	: out std_logic;
+	 JAL	: out std_logic;
+	 ALUOp : out std_logic_vector(3 downto 0));
+end ctrl_logic;
+
+
+architecture mixed of ctrl_logic is
+signal o : std_logic_vector(10 downto 0);
+begin
+
+process (opcode)
+begin
+case opcode is
+	when "000000" => o <= "00010010000"; --R Type
+	when "100011" => o <= "00001111000"; --lw
+	when "101011" => o <= "000-1-00100"; --sw
+	when "000100" => o <= "000-0-00010"; --beq
+	when "000010" => o <= "000---00001"; --j
+	when "010100" => o <= "-1---------"; --Halt
+	when "001000" => o <= "00001010000"; --addi
+	when "001001" => o <= "00001010000"; --addiu
+	when "001110" => o <= "00001010000"; --xori
+	when "001100" => o <= "00001010000"; --andi
+	when "001010" => o <= "00001010000"; --slti
+	when "001101" => o <= "00001010000"; --ori
+	when "000011" => o <= "10000010001"; --jal
+	when "000101" => o <= "001-0-00010"; --bne
+	when "001111" => o <= "00001010000"; --lui
+	when "011111" => o <= "0001-010000"; --repl
+
+	when others => o <= "00000000000";
+end case;
+
+
+end process;
+
+process(opcode)--ALUCtrl set lines
+begin
+case opcode is
+	when "000000" => ALUOp <= "0000";--000 means look at funct
+	when "100011" => ALUOp <= "0010"; --lw
+	when "101011" => ALUOp <= "0010"; --sw
+	when "000100" => ALUOp <= "0100"; --beq 100 means sub
+	when "000010" => ALUOp <= "----"; --j no use of alu
+	when "000011" => ALUOp <= "0000"; --jal no use of alu
+	when "000101" => ALUOp <= "0100"; --bne
+	when "001000" => ALUOp <= "0010"; --addi 010 means add
+	when "001001" => ALUOp <= "0011";--addiu 011 means addu
+	when "001010" => ALUOp <= "0110"; --slti 110 gets it's own bit setup
+	when "001101" => ALUOp <= "0001"; --ori 001 bottom of barrel
+	when "001110" => ALUOp <= "0111"; --xori 111 also bottom of barrel
+	when "001111" => ALUOp <= "1000"; --lui no use of alu
+	when "001100" => ALUOp <= "0101"; --andi 101 and
+	when "011111" => ALUOp <= "1111";
+	when others => ALUOp  <= "0000";
+end case;
+
+end process;
+
+--ALUCtrl: Shift right/left, shift l/a, signed/unsigned
+JAL <= o(10);
+Halt <= o(9);
+BNE <= o(8);
+RegDst <= o(7);
+ALUSrc <= o(6);
+MemToReg <= o(5);
+RegWrite <= o(4);
+MemRead <= o(3);
+MemWrite <= o(2);
+Branch <= o(1);
+Jump <= o(0);
+
+end mixed;

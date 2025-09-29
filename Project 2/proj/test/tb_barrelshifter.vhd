@@ -1,0 +1,187 @@
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_textio.all;  -- For logic types I/O
+library std;
+use std.env.all;                -- For hierarchical/external signals
+use std.textio.all;             -- For basic I/O
+
+
+entity tb_barrelshifter is
+  generic(gCLK_HPER   : time := 10 ns);   -- Generic for half of the clock cycle period
+end tb_barrelshifter;
+
+
+
+architecture mixed of tb_barrelshifter is
+
+constant cCLK_PER  : time := gCLK_HPER * 2;
+
+component barrelshifter is
+port 	(data_in : in std_logic_vector(31 downto 0);
+	 ctrl	: in std_logic_vector(4 downto 0);
+	 typesel: in std_logic; --Logical when 0 arithmetic when 1
+	 rlsel:   in std_logic; --Shifts right when 0 left when 1
+	 data_out : out std_logic_vector(31 downto 0));
+end component;
+
+
+
+
+signal s_ictrl   : std_logic_vector(4 downto 0);
+signal s_idata_in	: std_logic_vector(31 downto 0);
+signal s_itypesel   	: std_logic := '0'; 
+signal s_odata_out   : std_logic_vector(31 downto 0);
+signal s_rlsel		: std_logic := '0';
+
+
+begin
+
+
+DUT0: barrelshifter
+  port map(
+       data_in   	=> s_idata_in,
+       ctrl    	=> s_ictrl,
+       typesel	=> s_itypesel,
+       data_out	=> s_odata_out,
+       rlsel	=> s_rlsel);
+
+
+P_TEST_CASES: process
+  begin
+ s_ictrl <="00000"; 
+s_idata_in <= x"00000000";
+    wait for gCLK_HPER*2;
+
+    
+   
+    s_idata_in <= x"12345678";
+    wait for gCLK_HPER*2;
+    	
+	s_ictrl <="00001";
+ 
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00010";
+
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00011";
+
+
+    wait for gCLK_HPER*2;
+s_rlsel <= '1';
+
+
+ s_ictrl <="00000"; 
+s_idata_in <= x"00000000";
+    wait for gCLK_HPER*2;
+
+    
+   
+    s_idata_in <= x"12345678";
+    wait for gCLK_HPER*2;
+    	
+	s_ictrl <="00001";
+ 
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00010";
+
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00011";
+
+
+
+    wait for gCLK_HPER*2;
+
+s_rlsel <= '0';
+s_itypesel <= '1';
+
+ s_ictrl <="00000"; 
+s_idata_in <= x"00000000";
+    wait for gCLK_HPER*2;
+
+    
+   
+    s_idata_in <= x"F2345678";
+    wait for gCLK_HPER*2;
+    	
+	s_ictrl <="00001";
+ 
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00010";
+
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00011";
+
+
+    wait for gCLK_HPER*2;
+
+s_rlsel <= '1';
+s_itypesel <= '1';
+
+ s_ictrl <="00000"; 
+s_idata_in <= x"00000000";
+    wait for gCLK_HPER*2;
+
+    
+   
+    s_idata_in <= x"F2345678";
+    wait for gCLK_HPER*2;
+    	
+	s_ictrl <="00001";
+ 
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00010";
+
+    wait for gCLK_HPER*2;
+
+s_ictrl <="00011";
+
+
+    wait for gCLK_HPER*2;
+
+s_rlsel <= '0';
+s_itypesel <= '0';
+    
+   
+    s_idata_in <= x"12345678";
+    wait for gCLK_HPER*2;
+    	
+	s_ictrl <="00001";
+ 
+    wait for gCLK_HPER*2;
+	s_ictrl <="00010";
+ 
+    wait for gCLK_HPER*2;
+	s_ictrl <="00011";
+ 
+    wait for gCLK_HPER*2;
+	s_ictrl <="00100";
+ 
+    wait for gCLK_HPER*2;
+	s_ictrl <="00101";
+ 
+    wait for gCLK_HPER*2;
+	s_ictrl <="00110";
+ 
+    wait for gCLK_HPER*2;
+	s_ictrl <="00111";
+ 
+    wait for gCLK_HPER*2;
+	s_ictrl <="01000";
+ 
+    wait for gCLK_HPER*2;
+
+    wait for gCLK_HPER*2;
+	s_ictrl <="10000";
+ 
+    wait for gCLK_HPER*2;
+ end process;
+
+end mixed;

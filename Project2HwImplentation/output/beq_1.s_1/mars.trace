@@ -1,0 +1,13 @@
+[inst #1] addi $1,$0,7
+Register Write to Reg: 0x01 Val: 0x00000007
+[inst #2] addi $2,$0,7
+Register Write to Reg: 0x02 Val: 0x00000007
+[inst #3] nop 
+[inst #4] nop 
+[inst #5] bne $2,$1,3
+[inst #6] nop 
+[inst #7] nop 
+[inst #8] add $1,$0,$0
+Register Write to Reg: 0x01 Val: 0x00000000
+[inst #9] halt 
+

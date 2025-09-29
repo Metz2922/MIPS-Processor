@@ -1,0 +1,484 @@
+-------------------------------------------------------------------------
+-- Joseph Metzen
+-- Department of Electrical and Computer Engineering
+-- Iowa State University
+-------------------------------------------------------------------------
+
+-- tb_PipelineReg.vhd
+-------------------------------------------------------------------------
+-- DESCRIPTION: Testbench for all 4 stages of the pipeline.
+-- NOTES:
+-- 11/11/24 by Joseph::Design Created
+-- 11/18/24 edited by Kaden
+-------------------------------------------------------------------------
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity tb_PipelineReg is
+  generic(gCLK_HPER   : time := 50 ns);
+end tb_PipelineReg;
+
+architecture behavior of tb_PipelineReg is
+
+ -- Calculate the clock period as twice the half-period
+  --constant cCLK_PER  : time := gCLK_HPER * 2;
+
+--Components
+
+component IFIDReg is
+
+port (
+	     i_CLK  	 : in std_logic;
+	     i_RST       : in std_logic;
+	     i_WE        : in std_logic;
+	     PCIn	 : in std_logic_vector(31 downto 0);
+	     InstIn	 : in std_logic_vector(31 downto 0);
+	     PCOut	 : out std_logic_vector(31 downto 0);
+	     InstOut	 : out std_logic_vector(31 downto 0));
+
+end component;
+
+component IDExReg is 
+
+port (
+             i_CLK  	 : in std_logic;
+	     i_RST       : in std_logic;
+	     i_WE        : in std_logic;
+	     i_Sign 	 : in std_logic;
+	     o_sign      : out std_logic;
+	     i_RS 	 : in std_logic_vector(31 downto 0);
+	     i_RT 	 : in std_logic_vector(31 downto 0);
+	     o_RS 	 : out std_logic_vector(31 downto 0);
+	     o_RT	 : out std_logic_vector(31 downto 0);
+	     i_Instr     : in std_logic_vector(31 downto 0);
+	     o_Instr  	 : out std_logic_vector(31 downto 0);
+	     i_jrbit 	 : in std_logic;
+	     o_jrbit     : out std_logic;
+	     i_EXTIMM	 : in std_logic_vector(31 downto 0);
+	     o_EXTIMM	 : out std_logic_vector(31 downto 0);
+	     ALUSrcIn	 : in std_logic;
+	     ALUCTRLIn	 : in std_logic_vector(6 downto 0);
+	     RegDstIn    : in std_logic;
+	     MemWrIn     : in std_logic;
+	     MemReadIn   : in std_logic;
+	     BranchIn    : in std_logic;
+	     BNEIn       : in std_logic;
+	     JumpIn      : in std_logic;
+	     JALIn       : in std_logic;
+	     MemtoRegIn  : in std_logic;
+	     RegWrIn     : in std_logic;
+	     HaltIn      : in std_logic;
+	     ALUSrcOut   : out std_logic;
+	     ALUCTRLOut  : out std_logic_vector(6 downto 0);
+	     RegDstOut   : out std_logic;
+	     MemWrOut    : out std_logic;
+	     MemReadOut  : out std_logic;
+	     BranchOut   : out std_logic;
+	     BNEOut      : out std_logic;
+	     JumpOut     : out std_logic;
+	     JALOut      : Out std_logic;
+	     MemtoRegOut : out std_logic;
+	     RegWrOut    : out std_logic;
+	     Haltout     : out std_logic;
+	     PCADDER1_IN	: IN STD_LOGIC_VECTOR(31 downto 0);
+             PCADDER1_OUT	: OUT STD_LOGIC_VECTOR(31 downto 0);
+	     WBAddrIn    : in std_logic_vector(4 downto 0);
+	     WBAddrOut   : out std_logic_vector(4 downto 0));
+
+end component;
+
+component ExMemReg is
+
+port (
+
+	     i_CLK  	 : in std_logic;
+	     i_RST       : in std_logic;
+	     i_WE        : in std_logic;
+	     MemWrIn     : in std_logic;
+	     MemReadIn   : in std_logic;
+	     BranchIn    : in std_logic;
+	     BNEIn       : in std_logic;
+	     JumpIn      : in std_logic;
+	     JALIn       : in std_logic;
+	     MemtoRegIn  : in std_logic;
+	     RegWrIn     : in std_logic;
+	     HaltIn      : in std_logic;
+	     MemWrOut    : out std_logic;
+	     MemReadOut  : out std_logic;
+	     BranchOut   : out std_logic;
+	     BNEOut      : out std_logic;
+	     JumpOut     : out std_logic;
+	     JALOut      : Out std_logic;
+	     MemtoRegOut : out std_logic;
+	     RegWrOut    : out std_logic;
+	     Haltout     : out std_logic;
+	     RegDstIn    : in std_logic;
+	     RegDstOut   : out std_logic;
+             OvfIn		 : in std_logic;
+	     OvfOut		 : out std_logic;
+	     FromALU     : in std_logic_vector(31 downto 0);
+	     ALUToMEM    : out std_logic_vector(31 downto 0);
+	     i_RT     : in std_logic_vector(31 downto 0);
+	     o_RT    : out std_logic_vector(31 downto 0);
+	     PCADDER1_IN	: IN STD_LOGIC_VECTOR(31 downto 0);
+	     PCADDER1_OUT	: OUT STD_LOGIC_VECTOR(31 downto 0);
+	     WBAddrIn    : in std_logic_vector(4 downto 0);
+	     WBAddrOut   : out std_logic_vector(4 downto 0));
+end component;
+
+component MEMWBReg is
+
+port ( 
+	     i_CLK  	 : in std_logic;
+	     i_RST       : in std_logic;
+	     i_WE        : in std_logic;
+	     JALIn       : in std_logic;
+	     MemtoRegIn  : in std_logic;
+	     RegWrIn     : in std_logic;
+	     HaltIn      : in std_logic;
+	     JALOut      : Out std_logic;
+	     MemtoRegOut : out std_logic;
+	     RegWrOut    : out std_logic;
+	     Haltout     : out std_logic;
+	     RegDstIn    : in std_logic;
+	     RegDstOut   : out std_logic;
+             OvfIn		 : in std_logic;
+	     OvfOut		 : out std_logic;
+	     FromALU     : in std_logic_vector(31 downto 0);
+	     FromMem     : in std_logic_vector(31 downto 0);
+	     MemToWB     : out std_logic_vector(31 downto 0);
+	     ALUToWB     : out std_logic_vector(31 downto 0);
+   	     WBAddrIn    : in std_logic_vector(4 downto 0);
+	     PCADDER1_IN	: IN STD_LOGIC_VECTOR(31 downto 0);
+	     PCADDER1_OUT	: OUT STD_LOGIC_VECTOR(31 downto 0);
+	     WBAddrOut   : out std_logic_vector(4 downto 0));
+
+end component;
+
+--Signals 
+
+signal s_CLK : std_logic;
+signal s_RST : std_logic;
+signal flush_IFID : std_logic;
+signal flush_IDEX : std_logic;
+signal flush_EXMEM : std_logic;
+signal flush_MEMWB : std_logic;
+signal stall_IFID : std_logic;
+signal stall_IDEX : std_logic;
+signal stall_EXMEM : std_logic;
+signal stall_MEMWB : std_logic;
+
+--IF/ID Stage Signals
+	     
+signal s_IFID_WE : std_logic;
+signal s_IFID_PCIn : std_logic_vector(31 downto 0);
+signal s_IFID_InstIn : std_logic_vector(31 downto 0);
+signal s_IFID_PCOut : std_logic_vector(31 downto 0);
+signal s_IFID_InstOut : std_logic_vector(31 downto 0);
+
+--ID/EX Stage Signals
+
+signal s_IDEX_WE : std_logic;
+signal  s_IDEX_Sign 	 : std_logic;
+signal  s_IDEX_Sign_OUT  : std_logic;
+signal  s_IDEX_RS 	 : std_logic_vector(31 downto 0);
+signal  s_IDEX_RT 	 : std_logic_vector(31 downto 0);
+signal  s_IDEX_RS_OUT 	 : std_logic_vector(31 downto 0);
+signal  s_IDEX_RT_OUT : std_logic_vector(31 downto 0);
+signal  s_IDEX_Instr     : std_logic_vector(31 downto 0);
+signal  s_IDEX_Instr_OUT 	 : std_logic_vector(31 downto 0);
+signal  s_IDEX_jrbit 	 : std_logic;
+signal  s_IDEX_jrbit_OUT    : std_logic;
+signal  s_IDEX_EXTIMM	 : std_logic_vector(31 downto 0);
+signal  s_IDEX_EXTIMMOUT : std_logic_vector(31 downto 0);
+signal  s_IDEX_ALUSrcIn	 : std_logic;
+signal s_IDEX_ALUCTRLIn	 : std_logic_vector(6 downto 0);
+signal s_IDEX_RegDstIn    : std_logic;
+signal s_IDEX_MemWrIn     : std_logic;
+signal s_IDEX_MemReadIn   : std_logic;
+signal s_IDEX_BranchIn    : std_logic;
+signal s_IDEX_BNEIn       : std_logic;
+signal s_IDEX_JumpIn      : std_logic;
+signal s_IDEX_JALIn       : std_logic;
+signal s_IDEX_MemtoRegIn  : std_logic;
+signal s_IDEX_RegWrIn     : std_logic;
+signal s_IDEX_HaltIn      : std_logic;
+signal s_IDEX_ALUSrcOut   : std_logic;
+signal s_IDEX_ALUCTRLOut  : std_logic_vector(6 downto 0);
+signal s_IDEX_RegDstOut   : std_logic;
+signal s_IDEX_MemWrOut    : std_logic;
+signal s_IDEX_MemReadOut  : std_logic;
+signal s_IDEX_BranchOut   : std_logic;
+signal s_IDEX_BNEOut      : std_logic;
+signal s_IDEX_JumpOut     : std_logic;
+signal s_IDEX_JALOut      : std_logic;
+signal s_IDEX_MemtoRegOut : std_logic;
+signal s_IDEX_RegWrOut    : std_logic;
+signal s_IDEX_Haltout     : std_logic;
+signal s_IDEX_PCADDER1_IN : STD_LOGIC_VECTOR(31 downto 0);
+signal s_IDEX_PCADDER1_OUT : STD_LOGIC_VECTOR(31 downto 0);
+signal s_IDEX_WBAddrIn    : std_logic_vector(4 downto 0);
+signal s_IDEX_WBAddrOut   : std_logic_vector(4 downto 0);
+
+--EX/MEM Stage Signals
+
+signal s_EXMEM_WE          : std_logic;
+signal s_EXMEM_MemWrIn     : std_logic;
+signal s_EXMEM_MemReadIn   : std_logic;
+signal s_EXMEM_BranchIn    : std_logic;
+signal s_EXMEM_BNEIn       : std_logic;
+signal s_EXMEM_JumpIn      : std_logic;
+signal s_EXMEM_JALIn       : std_logic;
+signal s_EXMEM_MemtoRegIn  : std_logic;
+signal s_EXMEM_RegWrIn     : std_logic;
+signal s_EXMEM_HaltIn      : std_logic;
+signal s_EXMEM_MemWrOut    : std_logic;
+signal s_EXMEM_MemReadOut  : std_logic;
+signal s_EXMEM_BranchOut   : std_logic;
+signal s_EXMEM_BNEOut      : std_logic;
+signal s_EXMEM_JumpOut     : std_logic;
+signal s_EXMEM_JALOut      : std_logic;
+signal s_EXMEM_MemtoRegOut : std_logic;
+signal s_EXMEM_RegWrOut    : std_logic;
+signal s_EXMEM_Haltout     : std_logic;
+signal s_EXMEM_RegDstIn    : std_logic;
+signal s_EXMEM_RegDstOut   : std_logic;
+signal s_EXMEM_OvfIn	   : std_logic;
+signal s_EXMEM_OvfOut	   : std_logic;
+signal s_EXMEM_FromALU     : std_logic_vector(31 downto 0);
+signal s_EXMEM_ALUToMEM    : std_logic_vector(31 downto 0);
+signal s_EXMEM_i_RT        : std_logic_vector(31 downto 0);
+signal s_EXMEM_o_RT        : std_logic_vector(31 downto 0);
+signal s_EXMEM_PCADDER1_IN : STD_LOGIC_VECTOR(31 downto 0);
+signal s_EXMEM_PCADDER1_OUT : STD_LOGIC_VECTOR(31 downto 0);
+signal s_EXMEM_WBAddrIn    : std_logic_vector(4 downto 0);
+signal s_EXMEM_WBAddrOut   : std_logic_vector(4 downto 0);
+
+--MEM/WB Stage Signals
+
+signal s_MEMWB_WE          : std_logic;
+signal s_MEMWB_JALIn       : std_logic;
+signal s_MEMWB_MemtoRegIn  : std_logic;
+signal s_MEMWB_RegWrIn     : std_logic;
+signal s_MEMWB_HaltIn      : std_logic;
+signal s_MEMWB_JALOut      : std_logic;
+signal s_MEMWB_MemtoRegOut : std_logic;
+signal s_MEMWB_RegWrOut    : std_logic;
+signal s_MEMWB_Haltout     : std_logic;
+signal s_MEMWB_RegDstIn    : std_logic;
+signal s_MEMWB_RegDstOut   : std_logic;
+signal s_MEMWB_OvfIn       : std_logic;
+signal s_MEMWB_OvfOut      : std_logic;
+signal s_MEMWB_FromALU     : std_logic_vector(31 downto 0);
+signal s_MEMWB_FromMem     : std_logic_vector(31 downto 0);
+signal s_MEMWB_MemToWB     : std_logic_vector(31 downto 0);
+signal s_MEMWB_ALUToWB     : std_logic_vector(31 downto 0);
+signal s_MEMWB_WBAddrIn    : std_logic_vector(4 downto 0);
+signal s_MEMWB_PCADDER1_IN	: STD_LOGIC_VECTOR(31 downto 0);
+signal s_MEMWB_PCADDER1_OUT	: STD_LOGIC_VECTOR(31 downto 0);
+signal s_MEMWB_WBAddrOut   : std_logic_vector(4 downto 0);
+
+
+
+
+begin 
+	DUT0: IFIDReg
+	port map(i_CLK   => s_CLK,
+	  	 i_RST   => s_RST,
+		 i_WE    => s_IFID_WE,
+		 PCIn    => s_IFID_PCIn,
+	         InstIn  => s_IFID_InstIn,
+	         PCOut 	 => s_IFID_PCOut,
+	         InstOut => s_IFID_InstOut);
+
+
+	DUT1: IDEXReg
+	port map(i_CLK => s_CLK,
+	  	 i_RST => s_RST,
+		 i_WE  => s_IDEX_WE,
+		 i_Sign      => s_IDEX_Sign,
+	     	 o_sign      => s_IDEX_Sign_OUT,
+	         i_RS 	     => s_IDEX_RS,
+	         i_RT 	     => s_IDEX_RT,
+	         o_RS 	     => s_IDEX_RS_OUT,
+	         o_RT	     => s_IDEX_RT_OUT,
+	         i_Instr     => s_IDEX_Instr,
+	         o_Instr     => s_IDEX_Instr_OUT,
+	         i_jrbit     => s_IDEX_jrbit,
+	         o_jrbit     => s_IDEX_jrbit_OUT,
+	         i_EXTIMM    => s_IDEX_EXTIMM,
+	         o_EXTIMM    => s_IDEX_EXTIMMOUT,
+	         ALUSrcIn    => s_IDEX_ALUSrcIn,
+	         ALUCTRLIn   => s_IDEX_ALUCTRLIn,
+	         RegDstIn    => s_IDEX_RegDstIn,
+	         MemWrIn     => s_IDEX_MemWrIn,
+	         MemReadIn   => s_IDEX_MemReadIn,
+	         BranchIn    => s_IDEX_BranchIn,
+	         BNEIn       => s_IDEX_BNEIn,
+	         JumpIn      => s_IDEX_JumpIn,
+	         JALIn       => s_IDEX_JALIn,
+	         MemtoRegIn  => s_IDEX_MemtoRegIn,
+	         RegWrIn     => s_IDEX_RegWrIn,
+	         HaltIn      => s_IDEX_HaltIn,
+	         ALUSrcOut   => s_IDEX_ALUSrcOut,
+	         ALUCTRLOut  => s_IDEX_ALUCTRLOut,
+	         RegDstOut   => s_IDEX_RegDstOut,
+	         MemWrOut    => s_IDEX_MemWrOut,
+	         MemReadOut  => s_IDEX_MemReadOut,
+	         BranchOut   => s_IDEX_BranchOut,
+	         BNEOut      => s_IDEX_BNEOut,
+	         JumpOut     => s_IDEX_JumpOut,
+	         JALOut      => s_IDEX_JALOut,
+	         MemtoRegOut => s_IDEX_MemtoRegOut,
+	         RegWrOut    => s_IDEX_RegWrOut,
+	         Haltout     => s_IDEX_Haltout,
+	         PCADDER1_IN  => s_IDEX_PCADDER1_IN,
+                 PCADDER1_OUT => s_IDEX_PCADDER1_OUT,
+	         WBAddrIn     => s_IDEX_WBAddrIn,
+	         WBAddrOut    => s_IDEX_WBAddrOut);
+
+	DUT2: EXMEMReg
+	port map(i_CLK => s_CLK,
+	  	 i_RST => s_RST,
+		 i_WE  => s_EXMEM_WE,
+	  	 MemWrIn     => s_IDEX_MemWrOut,
+	         MemReadIn   => s_IDEX_MemReadOut,
+	         BranchIn    => s_IDEX_BranchOut,
+	         BNEIn       => s_IDEX_BNEOut,
+	         JumpIn      => s_IDEX_JumpOut,
+	         JALIn       => s_IDEX_JALOut,
+	         MemtoRegIn  => s_IDEX_MemtoRegOut,
+	         RegWrIn     => s_IDEX_RegWrOut,
+	         HaltIn      => s_IDEX_Haltout,
+	         MemWrOut    => s_EXMEM_MemWrOut,
+	         MemReadOut  => s_EXMEM_MemReadOut,
+	         BranchOut   => s_EXMEM_BranchOut,
+	         BNEOut      => s_EXMEM_BNEOut,
+	         JumpOut     => s_EXMEM_JumpOut,
+	         JALOut      => s_EXMEM_JALOut,
+	         MemtoRegOut => s_EXMEM_MemtoRegOut,
+	         RegWrOut    => s_EXMEM_RegWrOut,
+	         Haltout     => s_EXMEM_Haltout,
+ 		 RegDstIn    => s_EXMEM_RegDstIn,
+	    	 RegDstOut   => s_EXMEM_RegDstOut,
+ 		 OvfIn	     => s_EXMEM_OvfIn,
+	     	 OvfOut	     => s_EXMEM_RegDstOut,
+		 FromALU     => s_EXMEM_FromALU,
+	     	 ALUToMEM    => s_EXMEM_ALUToMEM,
+	     	 i_RT        => s_EXMEM_i_RT,
+	    	 o_RT        => s_EXMEM_o_RT,
+	         PCADDER1_IN  => s_IDEX_PCADDER1_OUT,
+                 PCADDER1_OUT => s_EXMEM_PCADDER1_OUT,
+	         WBAddrIn     => s_IDEX_WBAddrOut,
+	         WBAddrOut    => s_EXMEM_WBAddrOut);
+
+	DUT3: MEMWBReg
+	port map(i_CLK => s_CLK,
+	  	 i_RST => s_RST,
+		 i_WE  => s_MEMWB_WE,
+	         JALIn       => s_EXMEM_JALOut,
+	         MemtoRegIn  => s_EXMEM_MemtoRegOut,
+	         RegWrIn     => s_EXMEM_RegWrOut,
+	         HaltIn      => s_EXMEM_Haltout,
+	         JALOut      => s_MEMWB_JALOut,
+	         MemtoRegOut => s_MEMWB_MemtoRegOut,
+	         RegWrOut    => s_MEMWB_RegWrOut,
+	         Haltout     => s_MEMWB_Haltout,
+ 		 RegDstIn    => s_EXMEM_RegDstOut,
+	    	 RegDstOut   => s_MEMWB_RegDstOut,
+ 		 OvfIn	     => s_EXMEM_RegDstOut,
+	     	 OvfOut	     => s_MEMWB_OvfOut,
+		 FromALU     => s_EXMEM_ALUToMEM,
+		 FromMem     => s_MEMWB_FromMem,
+	         PCADDER1_IN  => s_EXMEM_PCADDER1_OUT,
+                 PCADDER1_OUT => s_MEMWB_PCADDER1_OUT,
+	         WBAddrIn     => s_EXMEM_WBAddrOut,
+	         WBAddrOut    => s_MEMWB_WBAddrOut);
+
+
+
+ -- This process sets the clock value (low for gCLK_HPER, then high
+  -- for gCLK_HPER). Absent a "wait" command, processes restart 
+  -- at the beginning once they have reached the final statement.
+  P_CLK: process
+  begin
+    s_CLK <= '0';
+    wait for gCLK_HPER;
+    s_CLK <= '1';
+    wait for gCLK_HPER;
+  end process;
+
+ P_TB: process
+  begin
+
+-- put test codes below here
+
+	s_RST 		    <= '0';
+	s_IFID_WE	    <= '1';
+	s_IDEX_WE	    <= '1';
+	s_EXMEM_WE 	    <= '1';
+	s_MEMWB_WE	    <= '1';
+	s_IFID_PCIn	    <= X"FFFFFFFF";
+	s_IFID_InstIn	    <= X"FFFFFFFF";
+	s_IDEX_JALIn	    <= '1';
+	s_IDEX_WBAddrIn     <= "11111";
+	wait for gCLK_HPER; 
+
+	s_RST 		    <= '0';
+	s_IFID_WE	    <= '0';
+	s_IDEX_WE	    <= '0';
+	s_EXMEM_WE 	    <= '0';
+	s_MEMWB_WE	    <= '0';
+	s_IFID_PCIn	    <= X"FFFFFFFF";
+	s_IFID_InstIn	    <= X"FFFFFFFF";
+	s_IDEX_JALIn	    <= '1';
+	s_IDEX_WBAddrIn     <= "11111";
+	wait for gCLK_HPER; 
+
+	wait for gCLK_HPER;
+
+	wait for gCLK_HPER;
+
+	wait for gCLK_HPER;
+
+	s_RST 		    <= '0';
+	s_IFID_WE	    <= '1';
+	s_IDEX_WE	    <= '1';
+	s_EXMEM_WE 	    <= '1';
+	s_MEMWB_WE	    <= '1';
+	s_IFID_PCIn	    <= X"FFFFFFFF";
+	s_IFID_InstIn	    <= X"FFFFFFFF";
+	s_IDEX_JALIn	    <= '1';
+	s_IDEX_WBAddrIn     <= "11111";
+	wait for gCLK_HPER; 
+
+	wait for gCLK_HPER;
+
+	wait for gCLK_HPER;
+
+	wait for gCLK_HPER;
+
+
+	s_RST 		    <= '1';
+	s_IFID_WE	    <= '0';
+	s_IDEX_WE	    <= '0';
+	s_EXMEM_WE 	    <= '0';
+	s_MEMWB_WE	    <= '0';
+	s_IFID_PCIn	    <= X"FFFFFFFF";
+	s_IFID_InstIn	    <= X"FFFFFFFF";
+	s_IDEX_JALIn	    <= '1';
+	s_IDEX_WBAddrIn     <= "11111";
+	wait for gCLK_HPER; 
+
+	wait for gCLK_HPER;
+
+	wait for gCLK_HPER;
+
+	wait for gCLK_HPER;
+
+
+    wait;
+    end process;
+  
+end behavior;

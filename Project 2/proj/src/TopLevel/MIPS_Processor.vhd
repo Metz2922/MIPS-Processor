@@ -1,0 +1,666 @@
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
+
+LIBRARY work;
+USE work.MIPS_types.ALL;
+
+ENTITY MIPS_Processor IS
+	GENERIC (N : INTEGER := DATA_WIDTH);
+	PORT (
+		iCLK : IN STD_LOGIC;
+		iRST : IN STD_LOGIC;
+		iInstLd : IN STD_LOGIC;
+		iInstAddr : IN STD_LOGIC_VECTOR(N - 1 DOWNTO 0);
+		iInstExt : IN STD_LOGIC_VECTOR(N - 1 DOWNTO 0);
+		oALUOut : OUT STD_LOGIC_VECTOR(N - 1 DOWNTO 0)); -- TODO: Hook this up to the output of the ALU. It is important for synthesis that you have this output that can effectively be impacted by all other components so they are not optimized away.
+
+END MIPS_Processor;
+
+ARCHITECTURE structure OF MIPS_Processor IS
+
+	-- Required data memory signals
+	SIGNAL s_DMemWr : STD_LOGIC; -- TODO: use this signal as the final active high data memory write enable signal
+	SIGNAL s_DMemAddr : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- TODO: use this signal as the final data memory address input
+	SIGNAL s_DMemData : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- TODO: use this signal as the final data memory data input
+	SIGNAL s_DMemOut : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- TODO: use this signal as the data memory output
+
+	-- Required register file signals 
+	SIGNAL s_RegWr : STD_LOGIC; -- TODO: use this signal as the final active high write enable input to the register file
+	SIGNAL s_RegWrAddr : STD_LOGIC_VECTOR(4 DOWNTO 0); -- TODO: use this signal as the final destination register address input
+	SIGNAL s_RegWrData : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- TODO: use this signal as the final data memory data input
+	SIGNAL s_MuxIntoReg : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- Goes from the alu/mem mux into a mux that chooses between this signal and jal register 31
+
+	-- Required instruction memory signals
+	SIGNAL s_IMemAddr : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- Do not assign this signal, assign to s_NextInstAddr instead
+	SIGNAL s_NextInstAddr : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- TODO: use this signal as your intended final instruction memory address input.
+	SIGNAL s_Inst : STD_LOGIC_VECTOR(N - 1 DOWNTO 0); -- TODO: use this signal as the instruction signal 
+
+	-- Required halt signal -- for simulation
+	SIGNAL s_Halt : STD_LOGIC; -- TODO: this signal indicates to the simulation that intended program execution has completed. (Opcode: 01 0100)
+
+	-- Required overflow signal -- for overflow exception detection
+	SIGNAL s_Ovfl : STD_LOGIC; -- TODO: this signal indicates an overflow exception would have been initiated
+
+	-- Signals for fetch
+	SIGNAL pcmux1_S : STD_LOGIC;
+	SIGNAL s_EXTIMM, PCWRITE : STD_LOGIC_VECTOR(31 DOWNTO 0);
+	SIGNAL s_FetchIncremented : STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+	-- Signals from CTRL Logic
+	SIGNAL s_MemReadUnused : STD_LOGIC; -- TODO: Help I'm scared
+	SIGNAL RegDst, ALUSrc, Branch, BNE, Jump, MemToReg, JAL : STD_LOGIC;
+	SIGNAL ALUOp : STD_LOGIC_VECTOR(3 DOWNTO 0);
+
+	-- Signals from ALU_Control
+	SIGNAL Sign : STD_LOGIC;
+	SIGNAL ALUCTRL : STD_LOGIC_VECTOR(6 DOWNTO 0);
+	SIGNAL s_JRBIT : STD_LOGIC;
+
+	-- Signals for Reg File
+	SIGNAL s_oRS, s_oRT : STD_LOGIC_VECTOR(31 DOWNTO 0);
+	SIGNAL rdmux2out : STD_LOGIC_VECTOR(4 DOWNTO 0);
+
+	-- Signals for ALU
+	SIGNAL s_MOUT, s_ALUOUT : STD_LOGIC_VECTOR(31 DOWNTO 0); -- multiplexed input to alu, it certainly was named
+	SIGNAL Zero, s_C : STD_LOGIC;
+
+	SIGNAL PCADDER1, PCADDER1_Delayed : STD_LOGIC_VECTOR(31 DOWNTO 0);
+	SIGNAL s_Inst_Delayed : STD_LOGIC_VECTOR(31 DOWNTO 0);
+	COMPONENT mem IS
+		GENERIC (
+			ADDR_WIDTH : INTEGER;
+			DATA_WIDTH : INTEGER);
+		PORT (
+			clk : IN STD_LOGIC;
+			addr : IN STD_LOGIC_VECTOR((ADDR_WIDTH - 1) DOWNTO 0);
+			data : IN STD_LOGIC_VECTOR((DATA_WIDTH - 1) DOWNTO 0);
+			we : IN STD_LOGIC := '1';
+			q : OUT STD_LOGIC_VECTOR((DATA_WIDTH - 1) DOWNTO 0));
+	END COMPONENT;
+
+	COMPONENT registerFile IS
+		PORT (
+			i_D : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_CLK : IN STD_LOGIC;
+			i_RST : IN STD_LOGIC;
+			i_DS : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+			i_RS : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+			i_RT : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+			o_RS : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_RT : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_WE : IN STD_LOGIC);
+	END COMPONENT;
+
+	COMPONENT mux2t1_N IS
+		GENERIC (N : INTEGER := 16);
+		PORT (
+			i_S : IN STD_LOGIC;
+			i_D0 : IN STD_LOGIC_VECTOR(N - 1 DOWNTO 0);
+			i_D1 : IN STD_LOGIC_VECTOR(N - 1 DOWNTO 0);
+			o_O : OUT STD_LOGIC_VECTOR(N - 1 DOWNTO 0));
+	END COMPONENT;
+
+	COMPONENT ALU IS
+		PORT (
+			i_A : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_B : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_ALUc : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
+			i_shamt : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+			o_Zero : OUT STD_LOGIC;
+			i_replimm : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+			o_O : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_C : OUT STD_LOGIC;
+			i_signed : IN STD_LOGIC;
+			o_Ovf : OUT STD_LOGIC);
+	END COMPONENT;
+
+	COMPONENT signZeroExt IS
+		PORT (
+			i_D : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+			i_C : IN STD_LOGIC;
+			o_D : OUT STD_LOGIC_VECTOR(31 DOWNTO 0));
+	END COMPONENT;
+
+	COMPONENT PC IS
+		PORT (
+			i_CLK : IN STD_LOGIC;
+			i_RST : IN STD_LOGIC;
+			i_CHANGE : IN STD_LOGIC_VECTOR(31 DOWNTO 0); -- Drop in program counter
+			o_PC : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)); -- To read input of instruction mem
+	END COMPONENT;
+	COMPONENT rippleAdder_N IS
+		GENERIC (N : INTEGER := 32);
+		PORT (
+			i_C : IN STD_LOGIC;
+			i_A : IN STD_LOGIC_VECTOR(N - 1 DOWNTO 0);
+			i_B : IN STD_LOGIC_VECTOR(N - 1 DOWNTO 0);
+			o_O : OUT STD_LOGIC_VECTOR(N - 1 DOWNTO 0);
+			o_C : OUT STD_LOGIC);
+
+	END COMPONENT;
+
+	COMPONENT FetchLogic IS
+		PORT (
+			pc_OUT : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_JADD : IN STD_LOGIC_VECTOR(25 DOWNTO 0); -- 26 Bit jump
+			i_Jump : IN STD_LOGIC;
+			i_Mux1s : IN STD_LOGIC;
+			i_immed : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_JUMPRET : IN STD_LOGIC;
+			i_JUMPRETVAL : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_PCADDER1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_PCADDER1 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_JALVAL : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_PCWRITE : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)); -- To read input of instruction mem
+
+	END COMPONENT;
+
+	COMPONENT alu_control IS
+		PORT (
+			ALUOp : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+			funct : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+			jrbit : OUT STD_LOGIC;
+			o_signed : OUT STD_LOGIC;
+			o : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));
+	END COMPONENT;
+
+	COMPONENT ctrl_logic IS
+		PORT (
+			opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+			RegDst : OUT STD_LOGIC;
+			AluSrc : OUT STD_LOGIC;
+			MemToReg : OUT STD_LOGIC;
+			RegWrite : OUT STD_LOGIC;
+			MemRead : OUT STD_LOGIC;
+			MemWrite : OUT STD_LOGIC;
+			Branch : OUT STD_LOGIC;
+			Jump : OUT STD_LOGIC;
+			BNE : OUT STD_LOGIC;
+			Halt : OUT STD_LOGIC;
+			JAL : OUT STD_LOGIC;
+			ALUOp : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
+	END COMPONENT;
+
+	COMPONENT IFIDReg IS
+		PORT (
+			i_CLK : IN STD_LOGIC;
+			i_RST : IN STD_LOGIC;
+			i_WE : IN STD_LOGIC;
+			PCIn : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			InstIn : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			PCOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			InstOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0));
+	END COMPONENT;
+	COMPONENT IDExReg IS
+		PORT (
+			i_CLK : IN STD_LOGIC;
+			i_RST : IN STD_LOGIC;
+			i_WE : IN STD_LOGIC;
+
+			i_Sign : IN STD_LOGIC;
+			o_Sign : OUT STD_LOGIC;
+			i_RS : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_RT : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_RS : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_RT : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_Instr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_Instr : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			i_jrbit : IN STD_LOGIC;
+			o_jrbit : OUT STD_LOGIC;
+			i_EXTIMM : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			o_EXTIMM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			ALUSrcIn : IN STD_LOGIC;
+			ALUCTRLIn : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
+			RegDstIn : IN STD_LOGIC;
+			MemWrIn : IN STD_LOGIC;
+			MemReadIn : IN STD_LOGIC;
+			BranchIn : IN STD_LOGIC;
+			BNEIn : IN STD_LOGIC;
+			JumpIn : IN STD_LOGIC;
+			JALIn : IN STD_LOGIC;
+			MemtoRegIn : IN STD_LOGIC;
+			RegWrIn : IN STD_LOGIC;
+			HaltIn : IN STD_LOGIC;
+			ALUSrcOut : OUT STD_LOGIC;
+			ALUCTRLOut : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+			RegDstOut : OUT STD_LOGIC;
+			MemWrOut : OUT STD_LOGIC;
+			MemReadOut : OUT STD_LOGIC;
+			BranchOut : OUT STD_LOGIC;
+			BNEOut : OUT STD_LOGIC;
+			JumpOut : OUT STD_LOGIC;
+			JALOut : OUT STD_LOGIC;
+			MemtoRegOut : OUT STD_LOGIC;
+			RegWrOut : OUT STD_LOGIC;
+			Haltout : OUT STD_LOGIC;
+			PCADDER1_IN	: IN STD_LOGIC_VECTOR(31 downto 0);
+			PCADDER1_OUT	: OUT STD_LOGIC_VECTOR(31 downto 0);
+			WBAddrIn : IN STD_LOGIC_VECTOR(4 downto 0);
+			WBAddrOut : OUT STD_LOGIC_VECTOR(4 downto 0));
+	END COMPONENT;
+
+	COMPONENT ExMemReg IS
+		PORT (
+			i_CLK : IN STD_LOGIC;
+			i_RST : IN STD_LOGIC;
+			i_WE : IN STD_LOGIC;
+			MemWrIn : IN STD_LOGIC;
+			MemReadIn : IN STD_LOGIC;
+			BranchIn : IN STD_LOGIC;
+			BNEIn : IN STD_LOGIC;
+			JumpIn : IN STD_LOGIC;
+			JALIn : IN STD_LOGIC;
+			MemtoRegIn : IN STD_LOGIC;
+			RegWrIn : IN STD_LOGIC;
+			HaltIn : IN STD_LOGIC;
+			MemWrOut : OUT STD_LOGIC;
+			MemReadOut : OUT STD_LOGIC;
+			BranchOut : OUT STD_LOGIC;
+			BNEOut : OUT STD_LOGIC;
+			JumpOut : OUT STD_LOGIC;
+			JALOut : OUT STD_LOGIC;
+			MemtoRegOut : OUT STD_LOGIC;
+			RegWrOut : OUT STD_LOGIC;
+			Haltout : OUT STD_LOGIC;
+			RegDstIn : IN STD_LOGIC;
+			RegDstOut : OUT STD_LOGIC;
+			OvfIn		 : in std_logic;
+		 	OvfOut		 : out std_logic;
+			i_RT     : in std_logic_vector(31 downto 0);
+	    	o_RT    : out std_logic_vector(31 downto 0);
+			FromALU : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			ALUToMEM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			WBAddrIn : IN STD_LOGIC_VECTOR(4 downto 0);
+			PCADDER1_IN	: IN STD_LOGIC_VECTOR(31 downto 0);
+			PCADDER1_OUT	: OUT STD_LOGIC_VECTOR(31 downto 0);
+			WBAddrOut : OUT STD_LOGIC_VECTOR(4 downto 0));
+	END COMPONENT;
+
+	COMPONENT MEMWBReg IS
+		PORT (
+			i_CLK : IN STD_LOGIC;
+			i_RST : IN STD_LOGIC;
+			i_WE : IN STD_LOGIC;
+			JALIn : IN STD_LOGIC;
+			MemtoRegIn : IN STD_LOGIC;
+			RegWrIn : IN STD_LOGIC;
+			HaltIn : IN STD_LOGIC;
+			JALOut : OUT STD_LOGIC;
+			MemtoRegOut : OUT STD_LOGIC;
+			RegWrOut : OUT STD_LOGIC;
+			Haltout : OUT STD_LOGIC;
+			RegDstIn : IN STD_LOGIC;
+			RegDstOut : OUT STD_LOGIC;
+			OvfIn		 : in std_logic;
+		 	OvfOut		 : out std_logic;
+			FromALU : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			FromMem : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			MemToWB : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			ALUToWB : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+			PCADDER1_IN	: IN STD_LOGIC_VECTOR(31 downto 0);
+			PCADDER1_OUT	: OUT STD_LOGIC_VECTOR(31 downto 0);
+			WBAddrIn : IN STD_LOGIC_VECTOR(4 downto 0);
+			WBAddrOut : OUT STD_LOGIC_VECTOR(4 downto 0));
+	END COMPONENT;
+	--EX Reg Delay Signals
+	SIGNAL Halt, JRBitToEX, AluSrcToEX, RegDstToEX, MemWrToEX, MemReadToEX, BranchToEX, BNEToEX, JumpToEX, JALToEX, MemtoRegToEX, RegWrToEX, HaltToEX, SignToEX : STD_LOGIC;
+	SIGNAL ALUOut, EXTIMMToEX, ALUToMEM, RSToEX, RTToEX, InstToEX, RTToMEM : STD_LOGIC_VECTOR(31 DOWNTO 0);
+	SIGNAL ALUCTRLToEX : STD_LOGIC_VECTOR(6 DOWNTO 0);
+
+	--Mem Reg Delay Signals
+	SIGNAL HaltToMEM, RegDstToMEM, MemWr, MemReadToMEM, BranchToMEM, BNEToMEM, JumpToMEM, JALToMEM, MemtoRegToMEM, RegWrToMEM : STD_LOGIC;
+
+	--Mem Reg Delay Signals
+	SIGNAL RegDstToWB, JALToWB, MemtoRegToWB, RegWrToWB : STD_LOGIC;
+	SIGNAL MemToWB, ALUToWB : STD_LOGIC_VECTOR(31 DOWNTO 0);
+	SIGNAL RegWr, Overflow, OverflowToMEM : std_logic;
+	SIGNAL RegWrAddr, RegWrAddrToEX, RegWrAddrToMEM : STD_LOGIC_VECTOR(4 downto 0);
+
+
+	--New Signals for jump 
+	SIGNAL Jump_Address, PCADDER1_OUT, PCADDER1_ToEX, PCADDER1_ToMEM, PCADDER1_ToWB, PCADDER2_OUT, immed_shifted, pcmux1_OUT, pcmux2_OUT  : std_logic_vector(31 downto 0);
+	SIGNAL pcadder1_cout, pcadder2_cout : std_logic;
+	
+BEGIN
+
+	-- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
+	WITH iInstLd SELECT
+		s_IMemAddr <= s_NextInstAddr WHEN '0',
+		iInstAddr WHEN OTHERS;
+	IMem : mem
+	GENERIC MAP(
+		ADDR_WIDTH => ADDR_WIDTH,
+		DATA_WIDTH => N)
+	PORT MAP(
+		clk => iCLK,
+		addr => s_IMemAddr(11 DOWNTO 2),
+		data => iInstExt,
+		we => iInstLd,
+		q => s_Inst);
+
+	DMem : mem
+	GENERIC MAP(
+		ADDR_WIDTH => ADDR_WIDTH,
+		DATA_WIDTH => N)
+	PORT MAP(
+		clk => iCLK,
+		addr => s_DMemAddr(11 DOWNTO 2),
+		data => s_DMemData,
+		we => s_DMemWr,
+		q => MemToWB);
+
+	-- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
+	-- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
+
+
+
+------------------------------------Temporary(Probably) calculate the pc plus 4 and store in IFIDReg\
+
+PCAdder1Component: rippleAdder_N
+generic MAP(N => 32)
+port MAP(i_C => '0',
+	i_A => s_NextInstAddr,
+	i_B => x"00000004",
+	o_O => PCADDER1_OUT,
+	o_C => pcadder1_cout);
+
+------------------------------------------------------------------------
+
+	-- TODO: Implement the rest of your processor below this comment! 
+	regstage1 : IFIDReg
+	PORT MAP(
+		i_CLK => iCLK,
+		i_RST => iRST,
+		i_WE => '1',
+		PCIn => PCADDER1_OUT,
+		InstIn => s_Inst,
+		PCOut => PCADDER1_Delayed,
+		InstOut => s_Inst_Delayed);
+
+
+---------------------------------
+
+	SIGNEXT : signZeroExt
+	PORT MAP(
+		i_D => s_Inst_Delayed(15 DOWNTO 0),
+		i_C => Sign,
+		o_D => s_EXTIMM);
+
+---------------------------------------- Temporary (probably) using this for jump address calculation to separate from other fetch logic
+
+
+--Jump address calculation
+Jump_Address(27 downto 0) <= s_Inst_Delayed(25 DOWNTO 0) & "00";
+Jump_Address(31 downto 28) <= PCADDER1_Delayed(31 downto 28);
+
+--Shift immediate for branch
+immed_shifted <= EXTIMMToEX(29 downto 0) & "00";
+
+--Calculate Branch Address
+PCAdder2Component: rippleAdder_N
+generic MAP(N => 32)
+port MAP(i_C => '0',
+	i_A => PCADDER1_ToEX,
+	i_B => immed_shifted,
+	o_O => PCADDER2_OUT,
+	o_C => pcadder2_cout);
+
+--Mux that has pc+4 and branch as inputs
+PCMux1: mux2t1_N
+generic MAP(N => 32)
+port MAP(i_S => pcmux1_S,
+	i_D0 => PCADDER1_OUT,
+	i_D1 => PCADDER2_OUT,   --previously pcadder2_OUT
+	o_O => pcmux1_OUT);
+
+PCMux2: mux2t1_N
+generic MAP(N => 32)
+port MAP(i_S => Jump,
+	i_D0 => pcmux1_OUT,
+	i_D1 => Jump_Address,
+	o_O => pcmux2_OUT);
+
+PCMux3: mux2t1_N
+generic MAP(N => 32)
+port MAP(i_S => JRBitToEX,
+	i_D0 => pcmux2_OUT,
+	i_D1 => RSToEX,
+	o_O => PCWRITE);
+----------------------------------------
+	regstage2 : IDEXReg
+	PORT MAP(
+		i_CLK => iCLK,
+		i_RST => iRST,
+		i_WE => '1',
+		i_RS => s_oRS,
+		i_RT => s_oRT,
+		i_jrbit => s_JRBIT,
+		o_jrbit => JRBitToEX,
+		i_EXTIMM => s_EXTIMM,
+		ALUSrcIn => ALUSrc,
+		ALUCTRLIn => ALUCTRL,
+		RegDstIn => RegDst,
+		MemWrIn => MemWr,
+		HaltIn => Halt,
+		AluSrcOut => AluSrcToEX,
+		ALUCTRLOut => ALUCTRLToEX,
+		RegDstOut => RegDstToEX,
+		MemWrOut => MemWrToEX,
+		MemReadIn => s_MemReadUnused,
+		MemReadOut => MemReadToEX,
+		BranchIn => Branch,
+		BranchOut => BranchToEX,
+		BNEIn => BNE,
+		BNEOut => BNEToEX,
+		JumpIn => Jump,
+		JumpOut => JumpToEX,
+		JALIn => JAL,
+		JALOut => JALToEX,
+		MemToRegIn => MemToReg,
+		MemtoRegOut => MemtoRegToEX,
+		RegWrIn => RegWr,
+		RegWrOut => RegWrToEX,
+		Haltout => HaltToEX,
+		o_RS => RSToEX,
+		o_RT => RTToEX,
+		o_EXTIMM => EXTIMMToEX,
+		i_Sign => Sign,
+		o_Sign => SignToEX,
+		i_Instr => s_Inst_Delayed,
+		o_Instr => InstToEX,
+		PCADDER1_IN => PCADDER1_Delayed,
+		PCADDER1_OUT => PCADDER1_ToEX,
+		WBAddrIn => RegWrAddr,
+		WBAddrOut => RegWrAddrToEX);
+	regstage3 : ExMemReg
+	PORT MAP(
+		i_CLK => iCLK,
+		i_RST => iRST,
+		i_WE => '1',
+		RegDstIn => RegDstToEX,
+		MemWrIn => MemWrToEX,
+		HaltIn => HaltToEX,
+		RegDstOut => RegDstToMEM,
+		MemWrOut => s_DMemWr,
+		MemReadIn => MemReadToEX,
+		MemReadOut => MemReadToMEM,
+		BranchIn => BranchToEX,
+		BranchOut => BranchToMEM,
+		BNEIn => BNEToEX,
+		BNEOut => BNEToMEM,
+		JumpIn => JumpToEX,
+		JumpOut => JumpToMEM,
+		JALIn => JALToEX,
+		JALOut => JALToMEM,
+		MemToRegIn => MemToRegToEX,
+		MemtoRegOut => MemtoRegToMEM,
+		RegWrIn => RegWrToEX,
+		RegWrOut => RegWrToMEM,
+		Haltout => HaltToMEM,
+		FromALU => ALUOut,
+		ALUtoMEM => ALUToMEM,
+		WBAddrIn => RegWrAddrToEX,
+		WBAddrOut => RegWrAddrToMEM,
+		OvfIn	=> Overflow,
+		OvfOut	=> OverflowToMEM,
+		PCADDER1_IN => PCADDER1_ToEX,
+		PCADDER1_OUT => PCADDER1_ToMEM,
+		i_RT	=> RTToEX,
+		o_RT	=> RTToMEM);
+
+	regstage4 : MEMWBReg
+	PORT MAP(
+		i_CLK => iCLK,
+		i_RST => iRST,
+		i_WE => '1',
+		RegDstIn => RegDstToMEM,
+		HaltIn => HaltToMEM,
+		RegDstOut => RegDstToWB,
+		JALIn => JALToMEM,
+		JALOut => JALToWB,
+		MemToRegIn => MemtoRegToMEM,
+		MemtoRegOut => MemtoRegToWB,
+		Haltout => s_Halt,
+		FromALU => ALUToMEM,
+		FromMem => MemToWB,
+		MemToWB => s_DMemOut,
+		ALUtoWB => s_ALUOUT,
+		RegWrIn => RegWrToMEM,
+		RegWrOut => s_RegWr,
+		WBAddrIn => RegWrAddrToMEM,
+		WBAddrOut => s_RegWrAddr,
+		PCADDER1_IN => PCADDER1_ToMEM,
+		PCADDER1_OUT => PCADDER1_ToWB,
+		OvfIn	=> OverflowToMEM,
+		OvfOut	=> s_Ovfl);
+
+	pcmux1_S <= BranchToEX AND (Zero XOR BNEToEX);
+
+	s_DMemAddr <= ALUToMEM;
+
+	s_DMemData <= RTToMEM;
+	--ALUToMEM <= s_ALUOUT;
+	oALUOut <= s_ALUOUT;
+
+
+	CTRLLOGIC : ctrl_logic
+	PORT MAP(
+		opcode => s_Inst_Delayed(31 DOWNTO 26),
+		RegDst => RegDst,
+		AluSrc => ALUSrc,
+		MemToReg => MemToReg,
+		RegWrite => RegWr,
+		MemRead => s_MemReadUnused,
+		MemWrite => MemWr,
+		Branch => Branch,
+		BNE => BNE,
+		Halt => Halt,
+		Jump => Jump,
+		JAL => JAL,
+		ALUOp => ALUOp);
+	-------------------------
+
+	ALULOGIC : alu_control
+	PORT MAP(
+		ALUOp => ALUOp,
+		funct => s_Inst_Delayed(5 DOWNTO 0),
+		jrbit => s_JRBIT,
+		o_signed => Sign,
+		o => ALUCTRL);
+	----------------------------------
+
+--	FetchLog : FetchLogic
+--	PORT MAP(
+--		pc_OUT => s_NextInstAddr,
+--		i_JADD => s_Inst_Delayed(25 DOWNTO 0),
+--		i_Jump => JumpToEX,
+--		i_Mux1s => pcmux1_S,
+--		i_immed => EXTIMMToEX,
+--		i_JUMPRET => JRBitToEX,
+--		i_JUMPRETVAL => RSToEX,
+--		o_PCADDER1 => PCADDER1,
+--		i_PCADDER1 => PCADDER1_Delayed,
+--		o_JALVAL => s_FetchIncremented,
+--		o_PCWRITE => PCWRITE);
+	--------------
+
+	PCounter : PC
+	PORT MAP(
+		i_CLK => iCLK,
+		i_RST => iRST,
+		i_CHANGE => PCWRITE,
+		o_PC => s_NextInstAddr);
+	-----------------------------
+
+	rdmux : mux2t1_N 
+	GENERIC MAP(N => 5)
+	PORT MAP(
+		i_S => RegDst,
+		i_D0 => rdmux2out,
+		i_D1 => s_Inst_Delayed(15 DOWNTO 11),
+		o_O => RegWrAddr);
+
+	rdmux2 : mux2t1_N 
+	GENERIC MAP(N => 5)
+	PORT MAP(
+		i_S => JAL,
+		i_D0 => s_Inst_Delayed(20 DOWNTO 16),
+		i_D1 => "11111",
+		o_O => rdmux2out);
+	--------------------------- 
+
+	linkmux : mux2t1_N ---MAY NEED SIGNALS SENT THROUGH REGS/REVISED
+	GENERIC MAP(N => 32)
+	PORT MAP(
+		i_S => JALToWB,
+		i_D0 => s_MuxIntoReg,
+		i_D1 => PCADDER1_ToWB,
+		o_O => s_RegWrData);
+	--------------------------- 
+
+	REGFILE : registerFile
+	PORT MAP(
+		i_D => s_RegWrData,
+		i_CLK => NOT iCLK,
+		i_RST => iRST,
+		i_DS => s_RegWrAddr, 
+		i_RS => s_Inst_Delayed(25 DOWNTO 21),
+		i_RT => s_Inst_Delayed(20 DOWNTO 16),
+		o_RS => s_oRS,
+		o_RT => s_oRT,
+		i_WE => s_RegWr);
+	-----------------------------
+
+	ALUMUX : mux2t1_N
+	GENERIC MAP(N => 32)
+	PORT MAP(
+		i_S => AluSrcToEX,
+		i_D0 => RTToEX,
+		i_D1 => EXTIMMToEX,
+		o_O => s_MOUT);
+	------------------------------------
+
+	ALU32b : ALU
+	PORT MAP(
+		i_A => RSToEX,
+		i_B => s_MOUT,
+		i_ALUc => ALUCTRLToEX,
+		i_shamt => InstToEX(10 DOWNTO 6),
+		o_Zero => Zero,
+		o_O => ALUOut,
+		o_C => s_C,
+		i_replimm => InstToEX(23 DOWNTO 16),
+		i_signed => SignToEX,
+		o_Ovf => Overflow);
+	--------------------------------------------------------
+
+	MUXINREG : mux2t1_N
+	GENERIC MAP(N => 32)
+	PORT MAP(
+		i_S => MemToRegToWB,
+		i_D0 => s_ALUOUT,
+		i_D1 => s_DMemOut,
+		o_O => s_MuxIntoReg);
+
+END structure;

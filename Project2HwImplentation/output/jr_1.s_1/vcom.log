@@ -1,0 +1,91 @@
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+Start time: 16:44:47 on Nov 17,2024
+vcom -2008 -work internal/ModelSimContainer/work proj/src/MIPS_types.vhd internal/testpy/tb.vhd proj/src/MIPS_types.vhd proj/src/ctrl_log/ctrl_logic.vhd proj/src/fetch/PC.vhd proj/src/fetch/FetchLogic.vhd proj/src/datapath/nRegister.vhd proj/src/datapath/signZeroExt.vhd proj/src/datapath/registerFile.vhd proj/src/datapath/Stages/MEMWBReg.vhd proj/src/datapath/Stages/IFIDReg.vhd proj/src/datapath/Stages/IDExReg.vhd proj/src/datapath/Stages/ExMemReg.vhd proj/src/datapath/aluctrl/alu_control.vhd proj/src/datapath/alu/onesComp.vhd proj/src/datapath/alu/ALU.vhd proj/src/datapath/alu/rippleAdder_N.vhd proj/src/datapath/alu/fullAdder.vhd proj/src/datapath/alu/SLT.vhd proj/src/datapath/alu/nAdd_Sub.vhd proj/src/datapath/alu/zeroDetect.vhd proj/src/decoders/decoder5t32.vhd proj/src/TopLevel/MIPS_Processor.vhd proj/src/TopLevel/mem.vhd proj/src/shifter/barrelshifter.vhd proj/src/gates/andg2.vhd proj/src/gates/orgN.vhd proj/src/gates/invg.vhd proj/src/gates/xorgN.vhd proj/src/gates/andgN.vhd proj/src/gates/dffg.vhd proj/src/gates/org2.vhd proj/src/gates/xorg2.vhd proj/src/muxes/mux32t1.vhd proj/src/muxes/mux2t1d.vhd proj/src/muxes/mux2t1_N.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package MIPS_types
+-- Compiling package body MIPS_types
+-- Loading package MIPS_types
+-- Loading package std_logic_textio
+-- Loading package ENV
+-- Compiling entity tb
+-- Compiling architecture mixed of tb
+** Warning: proj/src/MIPS_types.vhd(15): (vcom-1615) Existing package 'MIPS_types' at line 15 will be overwritten.
+-- Compiling package MIPS_types
+** Warning: proj/src/MIPS_types.vhd(29): (vcom-1615) Existing package body 'MIPS_types(body)' at line 29 will be overwritten.
+-- Compiling package body MIPS_types
+-- Loading package MIPS_types
+-- Loading package NUMERIC_STD
+-- Compiling entity ctrl_logic
+-- Compiling architecture mixed of ctrl_logic
+-- Compiling entity PC
+-- Compiling architecture rtl of PC
+-- Compiling entity FetchLogic
+-- Compiling architecture mixed of FetchLogic
+-- Compiling entity nRegister
+-- Compiling architecture structural of nRegister
+-- Compiling entity signZeroExt
+-- Compiling architecture dataflow of signZeroExt
+-- Loading package bus_mux_input
+-- Compiling entity registerFile
+-- Compiling architecture structural of registerFile
+-- Compiling entity MEMWBReg
+-- Compiling architecture structural of MEMWBReg
+-- Compiling entity IFIDReg
+-- Compiling architecture structural of IFIDReg
+-- Compiling entity IDExReg
+-- Compiling architecture structural of IDExReg
+-- Compiling entity ExMemReg
+-- Compiling architecture structural of ExMemReg
+-- Compiling entity alu_control
+-- Compiling architecture mixed of alu_control
+-- Compiling entity onesComp
+-- Compiling architecture structural of onesComp
+-- Compiling entity ALU
+-- Compiling architecture structural of ALU
+-- Compiling entity rippleAdder_N
+-- Compiling architecture structural of rippleAdder_N
+-- Compiling entity fullAdder
+-- Compiling architecture structural of fullAdder
+-- Compiling entity SLT
+-- Compiling architecture dataflow of SLT
+-- Compiling entity nAdd_Sub
+-- Compiling architecture structural of nAdd_Sub
+-- Compiling entity zeroDetect
+-- Compiling architecture dataflow of zeroDetect
+-- Compiling entity decoder5t32
+-- Compiling architecture dataflow of decoder5t32
+-- Loading package MIPS_types
+-- Compiling entity MIPS_Processor
+-- Compiling architecture structure of MIPS_Processor
+-- Compiling entity mem
+-- Compiling architecture rtl of mem
+-- Compiling entity barrelshifter
+-- Compiling architecture mixed of barrelshifter
+-- Compiling entity andg2
+-- Compiling architecture dataflow of andg2
+-- Compiling entity orgN
+-- Compiling architecture structural of orgN
+-- Compiling entity invg
+-- Compiling architecture dataflow of invg
+-- Compiling entity xorgN
+-- Compiling architecture structural of xorgN
+-- Compiling entity andgN
+-- Compiling architecture structural of andgN
+-- Compiling entity dffg
+-- Compiling architecture mixed of dffg
+-- Compiling entity org2
+-- Compiling architecture dataflow of org2
+-- Compiling entity xorg2
+-- Compiling architecture dataflow of xorg2
+-- Compiling package bus_mux_input
+-- Loading package bus_mux_input
+-- Compiling entity mux32t1
+-- Compiling architecture dataflow of mux32t1
+-- Compiling entity mux2t1d
+-- Compiling architecture dataflow of mux2t1d
+-- Compiling entity mux2t1_N
+-- Compiling architecture structural of mux2t1_N
+End time: 16:44:48 on Nov 17,2024, Elapsed time: 0:00:01
+Errors: 0, Warnings: 2

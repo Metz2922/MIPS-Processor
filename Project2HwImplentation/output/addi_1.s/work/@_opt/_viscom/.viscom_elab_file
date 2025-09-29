@@ -1,0 +1,1 @@
+/usr/local/mentor/questasim/linux_x86_64/VisualizerRls/bin/viscom -nolock -quiet -jmem_size 18825504 work.tb -quiet -auto_acc_if_foreign -work work -g OUTPUT_TRACE=ms.trace -debugdb +acc -allow_unnamed -o _opt -id 1-0050569b3804-6736cb0b-78e13-dd13 {+__design_bin_path+/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 2/containers/sim_container_0} +__betafsm

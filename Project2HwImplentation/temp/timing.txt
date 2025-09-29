@@ -1,0 +1,113 @@
+
+#
+# CprE 381 toolflow Timing dump
+#
+
+FMax: 50.68mhz Clk Constraint: 20.00ns Slack: 0.27ns
+
+The path is given below
+
+ ===================================================================
+ From Node    : IDExReg:regstage2|nRegister:EXTIMM|dffg:\G_NBit_REG:0:REGI|s_Q
+ To Node      : PC:PCounter|s_NEWVAL[3]
+ Launch Clock : iCLK
+ Latch Clock  : iCLK
+ Data Arrival Path:
+ Total (ns)  Incr (ns)     Type  Element
+ ==========  ========= ==  ====  ===================================
+      0.000      0.000           launch edge time
+      3.090      3.090  R        clock network delay
+      3.322      0.232     uTco  IDExReg:regstage2|nRegister:EXTIMM|dffg:\G_NBit_REG:0:REGI|s_Q
+      3.322      0.000 FF  CELL  regstage2|EXTIMM|\G_NBit_REG:0:REGI|s_Q|q
+      3.845      0.523 FF    IC  ALUMUX|\G_NBit_MUX:0:MUXI|o_O~0|datab
+      4.270      0.425 FF  CELL  ALUMUX|\G_NBit_MUX:0:MUXI|o_O~0|combout
+      4.520      0.250 FF    IC  ALU32b|ADDER|adder|rAdder_0|cout|o_F~0|datad
+      4.645      0.125 FF  CELL  ALU32b|ADDER|adder|rAdder_0|cout|o_F~0|combout
+      5.299      0.654 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:1:rAdder_N|cout|o_F~0|datad
+      5.424      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:1:rAdder_N|cout|o_F~0|combout
+      5.683      0.259 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:2:rAdder_N|cout|o_F~0|datac
+      5.964      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:2:rAdder_N|cout|o_F~0|combout
+      6.222      0.258 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:3:rAdder_N|cout|o_F~0|datac
+      6.503      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:3:rAdder_N|cout|o_F~0|combout
+      6.759      0.256 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:4:rAdder_N|cout|o_F~0|datac
+      7.040      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:4:rAdder_N|cout|o_F~0|combout
+      7.290      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:5:rAdder_N|cout|o_F~0|datad
+      7.415      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:5:rAdder_N|cout|o_F~0|combout
+      7.666      0.251 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:6:rAdder_N|cout|o_F~0|datad
+      7.791      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:6:rAdder_N|cout|o_F~0|combout
+      8.041      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:7:rAdder_N|cout|o_F~0|datad
+      8.166      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:7:rAdder_N|cout|o_F~0|combout
+      8.549      0.383 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:8:rAdder_N|cout|o_F~0|datad
+      8.674      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:8:rAdder_N|cout|o_F~0|combout
+      8.923      0.249 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:9:rAdder_N|cout|o_F~0|datad
+      9.048      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:9:rAdder_N|cout|o_F~0|combout
+      9.304      0.256 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:10:rAdder_N|cout|o_F~0|datac
+      9.585      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:10:rAdder_N|cout|o_F~0|combout
+      9.837      0.252 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:11:rAdder_N|cout|o_F~0|datad
+      9.962      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:11:rAdder_N|cout|o_F~0|combout
+     10.220      0.258 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:12:rAdder_N|cout|o_F~0|datac
+     10.501      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:12:rAdder_N|cout|o_F~0|combout
+     10.756      0.255 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:13:rAdder_N|cout|o_F~0|datac
+     11.037      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:13:rAdder_N|cout|o_F~0|combout
+     11.285      0.248 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:14:rAdder_N|cout|o_F~0|datad
+     11.410      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:14:rAdder_N|cout|o_F~0|combout
+     11.664      0.254 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:15:rAdder_N|cout|o_F~0|datac
+     11.945      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:15:rAdder_N|cout|o_F~0|combout
+     12.194      0.249 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:16:rAdder_N|cout|o_F~0|datad
+     12.319      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:16:rAdder_N|cout|o_F~0|combout
+     12.568      0.249 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:17:rAdder_N|cout|o_F~0|datad
+     12.693      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:17:rAdder_N|cout|o_F~0|combout
+     12.945      0.252 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:18:rAdder_N|cout|o_F~0|datad
+     13.070      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:18:rAdder_N|cout|o_F~0|combout
+     13.319      0.249 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:19:rAdder_N|cout|o_F~0|datad
+     13.444      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:19:rAdder_N|cout|o_F~0|combout
+     13.700      0.256 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:20:rAdder_N|cout|o_F~0|datac
+     13.981      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:20:rAdder_N|cout|o_F~0|combout
+     14.231      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:21:rAdder_N|cout|o_F~0|datad
+     14.356      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:21:rAdder_N|cout|o_F~0|combout
+     14.606      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:22:rAdder_N|cout|o_F~0|datad
+     14.731      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:22:rAdder_N|cout|o_F~0|combout
+     14.981      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:23:rAdder_N|cout|o_F~0|datad
+     15.106      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:23:rAdder_N|cout|o_F~0|combout
+     15.485      0.379 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:24:rAdder_N|cout|o_F~0|datad
+     15.610      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:24:rAdder_N|cout|o_F~0|combout
+     15.862      0.252 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:25:rAdder_N|cout|o_F~0|datad
+     15.987      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:25:rAdder_N|cout|o_F~0|combout
+     16.237      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:26:rAdder_N|cout|o_F~0|datad
+     16.362      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:26:rAdder_N|cout|o_F~0|combout
+     16.612      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:27:rAdder_N|cout|o_F~0|datad
+     16.737      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:27:rAdder_N|cout|o_F~0|combout
+     16.987      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:28:rAdder_N|cout|o_F~0|datad
+     17.112      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:28:rAdder_N|cout|o_F~0|combout
+     17.362      0.250 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:29:rAdder_N|cout|o_F~0|datad
+     17.487      0.125 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:29:rAdder_N|cout|o_F~0|combout
+     17.745      0.258 FF    IC  ALU32b|ADDER|adder|\G_rAdder_N:30:rAdder_N|cout|o_F~0|datac
+     18.026      0.281 FF  CELL  ALU32b|ADDER|adder|\G_rAdder_N:30:rAdder_N|cout|o_F~0|combout
+     18.281      0.255 FF    IC  ALU32b|ADDER|adder|r_Adder_N|axobxoc|o_F|datac
+     18.562      0.281 FF  CELL  ALU32b|ADDER|adder|r_Adder_N|axobxoc|o_F|combout
+     18.789      0.227 FF    IC  ALU32b|replMux|\G_NBit_MUX:0:MUXI|o_O~4|datad
+     18.914      0.125 FF  CELL  ALU32b|replMux|\G_NBit_MUX:0:MUXI|o_O~4|combout
+     19.142      0.228 FF    IC  ALU32b|replMux|\G_NBit_MUX:0:MUXI|o_O~7|datad
+     19.267      0.125 FF  CELL  ALU32b|replMux|\G_NBit_MUX:0:MUXI|o_O~7|combout
+     19.499      0.232 FF    IC  ALU32b|replMux|\G_NBit_MUX:0:MUXI|o_O~8|datac
+     19.780      0.281 FF  CELL  ALU32b|replMux|\G_NBit_MUX:0:MUXI|o_O~8|combout
+     20.012      0.232 FF    IC  pcmux1_S|datac
+     20.293      0.281 FF  CELL  pcmux1_S|combout
+     21.843      1.550 FF    IC  PCounter|s_NEWVAL[25]~5|datac
+     22.124      0.281 FF  CELL  PCounter|s_NEWVAL[25]~5|combout
+     22.369      0.245 FF    IC  PCounter|s_NEWVAL~7|datac
+     22.649      0.280 FF  CELL  PCounter|s_NEWVAL~7|combout
+     22.649      0.000 FF    IC  PCounter|s_NEWVAL[3]|d
+     22.753      0.104 FF  CELL  PC:PCounter|s_NEWVAL[3]
+ Data Required Path:
+ Total (ns)  Incr (ns)     Type  Element
+ ==========  ========= ==  ====  ===================================
+     20.000     20.000           latch edge time
+     22.991      2.991  R        clock network delay
+     23.023      0.032           clock pessimism removed
+     23.003     -0.020           clock uncertainty
+     23.021      0.018     uTsu  PC:PCounter|s_NEWVAL[3]
+ Data Arrival Time  :    22.753
+ Data Required Time :    23.021
+ Slack              :     0.268
+ ===================================================================

@@ -1,0 +1,64 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity HazardCtrl is
+port(BranchTaken : in std_logic;
+     Branch : in std_logic;
+     BranchEX : in std_logic;
+     Jump	: in std_logic;
+     JR     : in std_logic;
+     WBAddrToEX : in std_logic_vector(4 downto 0);
+     WBAddrToMEM : in std_logic_vector(4 downto 0);
+     RS         : in std_logic_vector(4 downto 0);
+     RT         : in std_logic_vector(4 downto 0);
+     RTSel      : in std_logic;
+     IFIDRs		 : in std_logic_vector(4 downto 0);
+     IFIDRt 	 : in std_logic_vector(4 downto 0);
+     IDEXRd	         : in std_logic_vector(4 downto 0);
+     EXMEMRd         : in std_logic_vector(4 downto 0);
+     ALUSrc     : in std_logic;
+     Flush  : out std_logic_vector(3 downto 0);
+     Stall  : out std_logic_vector(3 downto 0));
+end HazardCtrl;
+
+
+architecture mixed of HazardCtrl is
+signal branchInPipeline : std_logic;
+signal RSCheck, RSEXCheck, RSMEMCheck    : std_logic_vector(4 downto 0);
+signal RTCheck, RTEXCheck, RTMEMCheck    : std_logic_vector(4 downto 0);
+signal RegDestFlag      : std_logic;
+
+begin
+--branchInPipeline <= Branch OR BranchEX;
+
+
+    RSEXCheck <= (WBAddrToEX XOR RS);
+    RTEXCheck <= (WBAddrToEX XOR RT);
+
+    RSMEMCheck <= (RS XOR WBAddrToMEM);
+    RTMEMCheck <= (RT XOR WBAddrToMEM);
+
+
+    Flush(3) <= BranchTaken OR Jump OR JR;
+    Flush(2) <= BranchTaken;
+    Flush(1) <= '0';
+    Flush(0) <= '0';
+    
+    process(IFIDRs, IFIDRt, IDEXRd, EXMEMRd, Stall)
+	begin
+	
+	if((IDEXRd = IFIDRs) or (EXMEMRd = IFIDRs)) then
+    		 Stall(3) <= '0'; 
+   		 Stall(2) <= '0';
+	elsif((IDEXRd = IFIDRt) or (EXMEMRd = IFIDRt))  then
+		 Stall(1) <= ALUSrc;  --Stalls when ALUSrc is 0 (ALU uses rt as source reg)
+    		 Stall(0) <= ALUSrc;
+	end if;
+end process;
+		
+    
+
+    
+    
+end mixed;

@@ -1,0 +1,1719 @@
+m255
+K4
+z2
+Z0 !s12c _opt9
+Z1 !s99 nomlopt
+R0
+R1
+R0
+R1
+!s12c _opt8
+R1
+!s12c _opt7
+R1
+Z2 !s12c _opt6
+R1
+R2
+R1
+!s12c _opt5
+R1
+!s12c _opt4
+R1
+!s12c _opt3
+R1
+Z3 !s12c _opt1
+R1
+Z4 !s12c _opt
+R1
+Z5 !s12c _opt2
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R3
+R1
+R4
+R1
+R5
+R1
+R5
+R1
+R5
+R1
+R5
+R1
+R5
+R1
+R4
+R1
+R4
+R1
+R4
+R1
+R3
+R1
+R4
+R1
+!s11e vcom 2024.2 2024.05, May 20 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z6 d/home/sforde22/CprE 381
+T_opt9
+!s110 1729281742
+VM<NS:fS_3[@c0>2OjO>YD0
+04 6 5 work tb_alu mixed 1
+=2-6805ca47c761-6712becd-dfe56-7c4b
+R1
+!s12f OEM100
+!s12b OEM100
+!s124 OEM100
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work work +acc
+tCvgOpt 0
+n@_opt9
+OL;O;2024.2;79
+R6
+Ealu
+Z7 w1729281157
+Z8 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z9 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z10 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 753
+Z11 d/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1
+Z12 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/ALU.vhd
+Z13 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/ALU.vhd
+l0
+L5 1
+VQE9MBLK=SB1f0;H:eBIe_3
+!s100 cYc3H=k]X[_^gU]lRKc:52
+Z14 OL;C;2024.2;79
+33
+Z15 !s110 1729281410
+!i10b 1
+Z16 !s108 1729281410.000000
+Z17 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/ALU.vhd|
+Z18 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/ALU.vhd|
+!i113 0
+Z19 o-work work -2008 -explicit
+Z20 tExplicit 1 CvgOpt 0
+Astructural
+R8
+R9
+R10
+DEx4 work 3 alu 0 22 QE9MBLK=SB1f0;H:eBIe_3
+!i122 753
+l90
+L19 158
+VdRXUL19c2CYeXNfn?F[QR3
+!s100 k=3?To3Pj7D[^]:Qe31do2
+R14
+33
+R15
+!i10b 1
+R16
+R17
+R18
+!i113 0
+R19
+R20
+Ealu_control
+Z21 w1729270009
+R8
+R9
+R10
+!i122 754
+R11
+Z22 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/aluctrl/alu_control.vhd
+Z23 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/aluctrl/alu_control.vhd
+l0
+L5 1
+VMB<he<3VEeGiXhFK?Lfz<2
+!s100 Yb8OadoB3P773X8ENJdZH0
+R14
+33
+R15
+!i10b 1
+R16
+Z24 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/aluctrl/alu_control.vhd|
+Z25 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/aluctrl/alu_control.vhd|
+!i113 0
+R19
+R20
+Amixed
+R8
+R9
+R10
+DEx4 work 11 alu_control 0 22 MB<he<3VEeGiXhFK?Lfz<2
+!i122 754
+l15
+L13 47
+VW4ngCB3WiLgdM0Dzo27Km3
+!s100 9F:_Od[[BS67@B_RoI>`P0
+R14
+33
+R15
+!i10b 1
+R16
+R24
+R25
+!i113 0
+R19
+R20
+Eandg2
+Z26 w1728486032
+R9
+R10
+!i122 766
+R11
+Z27 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andg2.vhd
+Z28 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andg2.vhd
+l0
+Z29 L23 1
+V14;Kgg<l^NcUXfn4K3W9P2
+!s100 YT?bGzEmcFo:DlnoC^B4_0
+R14
+33
+R15
+!i10b 1
+R16
+Z30 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andg2.vhd|
+Z31 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andg2.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R9
+R10
+DEx4 work 5 andg2 0 22 14;Kgg<l^NcUXfn4K3W9P2
+!i122 766
+l32
+Z32 L31 6
+V9c5LK:0kmmhln[C60E=TS2
+!s100 I`@Z@UBObS]<7m8bPgKUS1
+R14
+33
+R15
+!i10b 1
+R16
+R30
+R31
+!i113 0
+R19
+R20
+Eandgn
+Z33 w1729263133
+R9
+R10
+!i122 767
+R11
+Z34 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andgN.vhd
+Z35 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andgN.vhd
+l0
+L4 1
+VcW@C^03@]U5bcG]G>]7ZT2
+!s100 6TY8lNQ4UojQ;igiDmcGd2
+R14
+33
+R15
+!i10b 1
+R16
+Z36 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andgN.vhd|
+Z37 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/andgN.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 5 andgn 0 22 cW@C^03@]U5bcG]G>]7ZT2
+!i122 767
+l20
+Z38 L12 18
+VP26]SXTIgIC?R72NMIFcL1
+!s100 ;UKEnmZG8EhjW=0`:1@[;0
+R14
+33
+R15
+!i10b 1
+R16
+R36
+R37
+!i113 0
+R19
+R20
+Ebarrelshifter
+Z39 w1729091802
+R8
+R9
+R10
+!i122 745
+R11
+Z40 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/barrelshifter.vhd
+Z41 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/barrelshifter.vhd
+l0
+L7 1
+VzY4V4<n3EN6f]jK`E^clF1
+!s100 HzoNj]T9cLgOfWf`I[mcc1
+R14
+33
+Z42 !s110 1729281409
+!i10b 1
+Z43 !s108 1729281409.000000
+Z44 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/barrelshifter.vhd|
+Z45 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/barrelshifter.vhd|
+!i113 0
+R19
+R20
+Amixed
+R8
+R9
+R10
+DEx4 work 13 barrelshifter 0 22 zY4V4<n3EN6f]jK`E^clF1
+!i122 745
+l51
+L18 160
+V?YXB1k8ke?YBf?O`FRenD2
+!s100 :gh>F?81C6Q>aNAXmMF4Z3
+R14
+33
+R42
+!i10b 1
+R43
+R44
+R45
+!i113 0
+R19
+R20
+Pbus_mux_input
+R8
+R9
+R10
+!i122 774
+R26
+R11
+Z46 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux32t1.vhd
+Z47 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux32t1.vhd
+l0
+L5 3
+VlKCZV3fXEjkFoi4f93[fg0
+!s100 RPaOgWniUHIfmPYLPJ4i83
+R14
+33
+R15
+!i10b 1
+R16
+Z48 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux32t1.vhd|
+Z49 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux32t1.vhd|
+!i113 0
+R19
+R20
+Ectrl_logic
+Z50 w1729278990
+R8
+R9
+R10
+!i122 749
+R11
+Z51 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/ctrl_logic.vhd
+Z52 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/ctrl_logic.vhd
+l0
+L7 1
+V9Y_c5linDLkE:`0>7B`el3
+!s100 T;nEi7F<<TWmK8a5CzHzN3
+R14
+33
+R42
+!i10b 1
+R43
+Z53 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/ctrl_logic.vhd|
+Z54 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/ctrl_logic.vhd|
+!i113 0
+R19
+R20
+Amixed
+R8
+R9
+R10
+DEx4 work 10 ctrl_logic 0 22 9Y_c5linDLkE:`0>7B`el3
+!i122 749
+l25
+L23 66
+VN@z7JDeNOJ<noeKn;QU:R3
+!s100 kNY^RZ1hOHbW:_=Af?<>R3
+R14
+33
+R42
+!i10b 1
+R43
+R53
+R54
+!i113 0
+R19
+R20
+Edecoder5t32
+R26
+R9
+R10
+!i122 764
+R11
+Z55 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/decoders/decoder5t32.vhd
+Z56 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/decoders/decoder5t32.vhd
+l0
+L4 1
+Vd@z7oi^W802`S5I_DgfR70
+!s100 ^@J@l12OZF4H2dP:j7k:W2
+R14
+33
+R15
+!i10b 1
+R16
+Z57 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/decoders/decoder5t32.vhd|
+Z58 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/decoders/decoder5t32.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R9
+R10
+DEx4 work 11 decoder5t32 0 22 d@z7oi^W802`S5I_DgfR70
+!i122 764
+l10
+L9 36
+V^j[l7ohToNUT`VjG2Aad^2
+!s100 g0Y0@>H8iD6h_g>OBIf?[1
+R14
+33
+R15
+!i10b 1
+R16
+R57
+R58
+!i113 0
+R19
+R20
+Edffg
+R26
+R9
+R10
+!i122 768
+R11
+Z59 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/dffg.vhd
+Z60 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/dffg.vhd
+l0
+R29
+VU4Z@1hOmhj;RN;m=o`PE50
+!s100 T4gcXQGMCgKJbn8XhBM;b0
+R14
+33
+R15
+!i10b 1
+R16
+Z61 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/dffg.vhd|
+Z62 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/dffg.vhd|
+!i113 0
+R19
+R20
+Amixed
+R9
+R10
+DEx4 work 4 dffg 0 22 U4Z@1hOmhj;RN;m=o`PE50
+!i122 768
+l37
+L33 29
+VcGk`70hTzUBQXe@mOZQMz3
+!s100 iOdlTUid@@]UimFK_53^C1
+R14
+33
+R15
+!i10b 1
+R16
+R61
+R62
+!i113 0
+R19
+R20
+Efetchlogic
+Z63 w1729275895
+R8
+R9
+R10
+!i122 765
+R11
+Z64 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/FetchLogic.vhd
+Z65 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/FetchLogic.vhd
+l0
+L5 1
+V=7^fPbPL@D`kV7R80XLUl1
+!s100 CU[>:V2BU8If9IOff]j;G2
+R14
+33
+R15
+!i10b 1
+R16
+Z66 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/FetchLogic.vhd|
+Z67 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/FetchLogic.vhd|
+!i113 0
+R19
+R20
+Amixed
+R8
+R9
+R10
+DEx4 work 10 fetchlogic 0 22 =7^fPbPL@D`kV7R80XLUl1
+!i122 765
+l40
+L18 65
+VFgjYVD2I^@4nzRbEa=bMc3
+!s100 _41D2KnZ>]`i:o>Li<c[D1
+R14
+33
+R15
+!i10b 1
+R16
+R66
+R67
+!i113 0
+R19
+R20
+Efulladder
+R26
+R9
+R10
+!i122 757
+R11
+Z68 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/fullAdder.vhd
+Z69 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/fullAdder.vhd
+l0
+L4 1
+Vhkm1mGPEASc7jHTRfR`o53
+!s100 ?ad_8l8=P_9T==4@GTW1V1
+R14
+33
+R15
+!i10b 1
+R16
+Z70 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/fullAdder.vhd|
+Z71 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/fullAdder.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 9 fulladder 0 22 hkm1mGPEASc7jHTRfR`o53
+!i122 757
+l32
+L10 49
+VhQ<K@]n13mDjhRVRc5SXZ3
+!s100 iH7?PzI]OK2RiW:?3Wd323
+R14
+33
+R15
+!i10b 1
+R16
+R70
+R71
+!i113 0
+R19
+R20
+Einvg
+R26
+R9
+R10
+!i122 769
+R11
+Z72 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/invg.vhd
+Z73 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/invg.vhd
+l0
+R29
+VV5ABnOY1@C84YczbbMJm43
+!s100 _XK?_^5z0Rm1<k12?;5R?2
+R14
+33
+R15
+!i10b 1
+R16
+Z74 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/invg.vhd|
+Z75 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/invg.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R9
+R10
+DEx4 work 4 invg 0 22 V5ABnOY1@C84YczbbMJm43
+!i122 769
+l31
+L30 6
+V?c8XNF03kj`aK82C8lK7Y1
+!s100 bk7I76o8e1LURdoZEQb8H0
+R14
+33
+R15
+!i10b 1
+R16
+R74
+R75
+!i113 0
+R19
+R20
+Emem
+Z76 w1697635538
+R8
+R9
+R10
+!i122 777
+R11
+Z77 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/mem.vhd
+Z78 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/mem.vhd
+l0
+L8 1
+V_0bz9Xd43MLgPRSR5AT?g2
+!s100 fRlcaiTJZJ1H;nZh;8=LI3
+R14
+33
+Z79 !s110 1729281411
+!i10b 1
+Z80 !s108 1729281411.000000
+Z81 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/mem.vhd|
+Z82 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/mem.vhd|
+!i113 0
+R19
+R20
+Artl
+R8
+R9
+R10
+DEx4 work 3 mem 0 22 _0bz9Xd43MLgPRSR5AT?g2
+!i122 777
+l37
+L27 24
+VP<hJO`eNK:GK56cZVLj@g0
+!s100 OI8_3><BhDkT3l3n8`OXd3
+R14
+33
+R79
+!i10b 1
+R80
+R81
+R82
+!i113 0
+R19
+R20
+Emips_processor
+Z83 w1729281273
+Z84 DPx4 work 10 mips_types 0 22 5Tif5GU?^MLONg?Bno<<10
+R9
+R10
+!i122 776
+R11
+Z85 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/MIPS_Processor.vhd
+Z86 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/MIPS_Processor.vhd
+l0
+R29
+VT7P?1^=iaI7D:cFjcfiUZ3
+!s100 H[0875z5OZm2QnkRY7o5_2
+R14
+32
+R79
+!i10b 1
+R80
+Z87 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/MIPS_Processor.vhd|
+Z88 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/TopLevel/MIPS_Processor.vhd|
+!i113 0
+Z89 o-work work -2002 -explicit
+R20
+Astructure
+R84
+R9
+R10
+DEx4 work 14 mips_processor 0 22 T7P?1^=iaI7D:cFjcfiUZ3
+!i122 776
+l156
+L35 254
+V7_CIHCbfY7=>H5H5DSB9^0
+!s100 RJoH_`XWQiY0bdN1JKc2U1
+R14
+32
+R79
+!i10b 1
+R80
+R87
+R88
+!i113 0
+R89
+R20
+Astructural
+R8
+R9
+R10
+DEx4 work 14 mips_processor 0 22 1lDhY@dlQ:=kOS5Kb0m@_0
+!i122 731
+l124
+L12 216
+V_YGj60WPAF`l6i=MSc=IV2
+!s100 7Vki^ZjYo9>LTo0A1C[7A3
+R14
+33
+!s110 1729280293
+!i10b 1
+!s108 1729280293.000000
+!s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/mips_processor.vhd|
+!s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/mips_processor.vhd|
+!i113 0
+R19
+R20
+F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/mips_processor.vhd
+w1729277479
+8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/mips_processor.vhd
+Pmips_types
+R9
+R10
+!i122 778
+R76
+R11
+Z90 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/MIPS_types.vhd
+Z91 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/MIPS_types.vhd
+l0
+L15 13
+V5Tif5GU?^MLONg?Bno<<10
+!s100 9LKPn?UhVC15^8Xc1`G4g2
+R14
+32
+R79
+!i10b 1
+R80
+Z92 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/MIPS_types.vhd|
+Z93 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/cpre381-toolflow/internal/boilerplate_src/MIPS_types.vhd|
+!i113 0
+R89
+R20
+Bbody
+R84
+R9
+R10
+!i122 778
+l0
+L29 3
+VICTL9M`eUF_;7kh^KUA]^3
+!s100 ZNa@oSJaSGzJZZUQAmX1U2
+R14
+32
+R79
+!i10b 1
+R80
+R92
+R93
+!i113 0
+R89
+R20
+Emipsdata2eb
+R26
+R8
+R9
+R10
+!i122 750
+R11
+Z94 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/MIPSData2EB.vhd
+Z95 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/MIPSData2EB.vhd
+l0
+L5 1
+VokG7S><Tj_NazV1WhUZB^0
+!s100 oJM4@E1@Y1[nKbaoe3>N43
+R14
+33
+R42
+!i10b 1
+R43
+Z96 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/MIPSData2EB.vhd|
+Z97 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/MIPSData2EB.vhd|
+!i113 0
+R19
+R20
+Astructural
+R8
+R9
+R10
+DEx4 work 11 mipsdata2eb 0 22 okG7S><Tj_NazV1WhUZB^0
+!i122 750
+l67
+L11 103
+VAY7eVh5E_4[gnb=lkOLF=2
+!s100 hXdT@=^:05j]0DE7NK6Rk3
+R14
+33
+R42
+!i10b 1
+R43
+R96
+R97
+!i113 0
+R19
+R20
+Emux2t1_n
+R26
+R9
+R10
+!i122 748
+R11
+Z98 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1_N.vhd
+Z99 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1_N.vhd
+l0
+L21 1
+VQ=7ih4@neN]EU?O8HlQWJ2
+!s100 a8b75l9QH119Si`4JcQ1J0
+R14
+33
+R42
+!i10b 1
+R43
+Z100 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1_N.vhd|
+Z101 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1_N.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 8 mux2t1_n 0 22 Q=7ih4@neN]EU?O8HlQWJ2
+!i122 748
+l39
+L30 21
+VW?19Ain2MU=S<286PP:<P1
+!s100 ;4a<J`b`dj1IYWF_oAJI`0
+R14
+33
+R42
+!i10b 1
+R43
+R100
+R101
+!i113 0
+R19
+R20
+Emux2t1d
+R26
+R9
+R10
+!i122 747
+R11
+Z102 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1d.vhd
+Z103 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1d.vhd
+l0
+L4 1
+VEfH??fMJ:3Do[7>`RA1X83
+!s100 kUWNl[7eN3L:CL1KhRXl92
+R14
+33
+R42
+!i10b 1
+R43
+Z104 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1d.vhd|
+Z105 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/muxes/mux2t1d.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R9
+R10
+DEx4 work 7 mux2t1d 0 22 EfH??fMJ:3Do[7>`RA1X83
+!i122 747
+l11
+L10 4
+V`AX@MdeS70a7HLU7V3RC=3
+!s100 0^N;b5e>F4AV9UcS9FTLm2
+R14
+33
+R42
+!i10b 1
+R43
+R104
+R105
+!i113 0
+R19
+R20
+Emux32t1
+R26
+R8
+Z106 DPx4 work 13 bus_mux_input 0 22 lKCZV3fXEjkFoi4f93[fg0
+R9
+R10
+!i122 774
+R11
+R46
+R47
+l0
+L14 1
+V>DUW3?lDi_YSY1nJRWEQN1
+!s100 ``SJQBDc[bGU;G900E6hn3
+R14
+33
+R15
+!i10b 1
+R16
+R48
+R49
+!i113 0
+R19
+R20
+Adataflow
+R8
+R106
+R9
+R10
+DEx4 work 7 mux32t1 0 22 >DUW3?lDi_YSY1nJRWEQN1
+!i122 774
+l22
+L20 5
+VQbd]HLA`loDPGPOCS5hS<3
+!s100 P6V2Zc`;Hg5jKIaEY0@V23
+R14
+33
+R15
+!i10b 1
+R16
+R48
+R49
+!i113 0
+R19
+R20
+Enadd_sub
+Z107 w1729281319
+R9
+R10
+!i122 758
+R11
+Z108 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/nAdd_Sub.vhd
+Z109 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/nAdd_Sub.vhd
+l0
+L4 1
+V1knRD>1@lzVhGENTeA1nQ1
+!s100 16]L8zI@KQI0VhR0VIP_J2
+R14
+33
+R15
+!i10b 1
+R16
+Z110 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/nAdd_Sub.vhd|
+Z111 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/nAdd_Sub.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 8 nadd_sub 0 22 1knRD>1@lzVhGENTeA1nQ1
+!i122 758
+l42
+L14 51
+V2C?9a:_k?RM6n^`UGAfoX3
+!s100 6N`IgEP1]8GeH6L<aPW6T3
+R14
+33
+R15
+!i10b 1
+R16
+R110
+R111
+!i113 0
+R19
+R20
+Enregister
+Z112 w1729276506
+R9
+R10
+!i122 775
+R11
+Z113 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/nRegister.vhd
+Z114 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/nRegister.vhd
+l0
+L4 1
+VJ7SD1<4oIJ40DCh>RGKf:3
+!s100 PRz?CX^m02a@^2fdI^ez42
+R14
+33
+R79
+!i10b 1
+R16
+Z115 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/nRegister.vhd|
+Z116 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/nRegister.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 9 nregister 0 22 J7SD1<4oIJ40DCh>RGKf:3
+!i122 775
+l23
+L13 21
+V_FVfzg_X?c4CTFc?8iif`1
+!s100 ;R>7AkJg5^zUggESYSdR61
+R14
+33
+R79
+!i10b 1
+R16
+R115
+R116
+!i113 0
+R19
+R20
+Eonescomp
+R26
+R9
+R10
+!i122 759
+R11
+Z117 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/onesComp.vhd
+Z118 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/onesComp.vhd
+l0
+L4 1
+VLWHfb8mk1KCU?dSa459K;2
+!s100 2lV@;R^aPPZS3CDkacNWb0
+R14
+33
+R15
+!i10b 1
+R16
+Z119 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/onesComp.vhd|
+Z120 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/onesComp.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 8 onescomp 0 22 LWHfb8mk1KCU?dSa459K;2
+!i122 759
+l18
+L11 16
+VIM<K>SJ51_8@m:h`;zd7O0
+!s100 b;=aPF=7B]I@PaM6c18Q10
+R14
+33
+R15
+!i10b 1
+R16
+R119
+R120
+!i113 0
+R19
+R20
+Eorg2
+R26
+R9
+R10
+!i122 770
+R11
+Z121 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/org2.vhd
+Z122 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/org2.vhd
+l0
+R29
+Vmi<eg7K]IQ]UHDeXadIRl2
+!s100 bGQ1F9eW^Q17OoL9h4g7z2
+R14
+33
+R15
+!i10b 1
+R16
+Z123 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/org2.vhd|
+Z124 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/org2.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R9
+R10
+DEx4 work 4 org2 0 22 mi<eg7K]IQ]UHDeXadIRl2
+!i122 770
+l32
+R32
+VYPSCdk<=TCTdM`giL9TZ10
+!s100 h5_AzR3TdRA0a_K=dQ>mI2
+R14
+33
+R15
+!i10b 1
+R16
+R123
+R124
+!i113 0
+R19
+R20
+Eorgn
+R33
+R9
+R10
+!i122 771
+R11
+Z125 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/orgN.vhd
+Z126 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/orgN.vhd
+l0
+L4 1
+VM]WZ_2]lVCiP^Wmb[^K<[3
+!s100 AFDZn6[TFSbh9X9GelF`G3
+R14
+33
+R15
+!i10b 1
+R16
+Z127 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/orgN.vhd|
+Z128 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/orgN.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 4 orgn 0 22 M]WZ_2]lVCiP^Wmb[^K<[3
+!i122 771
+l20
+R38
+V:X1FWlaZZQoalmg;0RT:93
+!s100 P;M[2FXKnIJDV>V7`3TPb1
+R14
+33
+R15
+!i10b 1
+R16
+R127
+R128
+!i113 0
+R19
+R20
+Epc
+R63
+R8
+R9
+R10
+!i122 751
+R11
+Z129 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/PC.vhd
+Z130 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/PC.vhd
+l0
+L5 1
+VEV@N;[OMJNh;M;05[bPn43
+!s100 5gNf_`2DR4@K1N]K2_D=31
+R14
+33
+R15
+!i10b 1
+R43
+Z131 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/PC.vhd|
+Z132 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/fetch/PC.vhd|
+!i113 0
+R19
+R20
+Artl
+R8
+R9
+R10
+DEx4 work 2 pc 0 22 EV@N;[OMJNh;M;05[bPn43
+!i122 751
+l15
+R38
+V3f9ACHIiF]7]NB008U:?X1
+!s100 RT6Cj]]6K<lBL;hahBj552
+R14
+33
+R15
+!i10b 1
+R43
+R131
+R132
+!i113 0
+R19
+R20
+Epcounter
+w1728484965
+R8
+R9
+R10
+!i122 96
+Z133 d/home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1
+Z134 8/home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/fetch/ProgramCounter.vhd
+Z135 F/home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/fetch/ProgramCounter.vhd
+l0
+L5 1
+V98fQ21THUok6M^Yi?m;Pk2
+!s100 6bnmL]_G2eLSNeSKo^:2m1
+R14
+32
+!s110 1728487950
+!i10b 1
+!s108 1728487950.000000
+Z136 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/fetch/ProgramCounter.vhd|
+Z137 !s107 /home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/fetch/ProgramCounter.vhd|
+!i113 0
+R89
+R20
+Artl
+w1728488245
+R8
+R9
+R10
+DEx4 work 8 pcounter 0 22 98fQ21THUok6M^Yi?m;Pk2
+!i122 156
+l17
+Z138 L13 22
+V1FJ^Yikj81dlM8DR`6m7=0
+!s100 bLPQJL7G53aiXk1YNn81i3
+R14
+32
+!s110 1728489477
+!i10b 1
+!s108 1728489477.000000
+R136
+R137
+!i113 0
+R89
+R20
+Eprogramcounter
+Z139 w1728490581
+R8
+R9
+R10
+!i122 301
+R133
+R134
+R135
+l0
+L5 1
+VF4D4V9D4TUcYDo>^`CV2d2
+!s100 ATA934LYQD_;^^6?I?_9I2
+R14
+32
+Z140 !s110 1728490936
+!i10b 1
+Z141 !s108 1728490936.000000
+R136
+R137
+!i113 0
+R89
+R20
+Artl
+R8
+R9
+R10
+Z142 DEx4 work 14 programcounter 0 22 F4D4V9D4TUcYDo>^`CV2d2
+!i122 301
+l17
+R138
+VFe4OjBL`gb6MjDb>H:_WR2
+!s100 cK@[;0b^@VQc]bi6m0`o>1
+R14
+32
+R140
+!i10b 1
+R141
+R136
+R137
+!i113 0
+R89
+R20
+Amixed
+R8
+R9
+R10
+R142
+!i122 198
+l17
+R138
+VK>lFJ[PVb<emlJ<B@o7@=0
+!s100 @G173L3N<Y>@]O52iIi;83
+R14
+32
+!s110 1728489673
+!i10b 1
+!s108 1728489673.000000
+R136
+R137
+!i113 0
+R89
+R20
+w1728489666
+Eregisterfile
+R26
+R106
+R8
+R9
+R10
+!i122 762
+R11
+Z143 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/registerFile.vhd
+Z144 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/registerFile.vhd
+l0
+L6 1
+VePbSbY6Kn50@kh=<IDc`C3
+!s100 <]dg6N94gm[ZF2cddZ7B60
+R14
+33
+R15
+!i10b 1
+R16
+Z145 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/registerFile.vhd|
+Z146 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/registerFile.vhd|
+!i113 0
+R19
+R20
+Astructural
+R106
+R8
+R9
+R10
+DEx4 work 12 registerfile 0 22 ePbSbY6Kn50@kh=<IDc`C3
+!i122 762
+l50
+L18 76
+VhN@L3PLejZAIUHlKQc7kc0
+!s100 Rz9g6=^VU75hPFilYjkSn1
+R14
+33
+R15
+!i10b 1
+R16
+R145
+R146
+!i113 0
+R19
+R20
+Erippleadder_n
+R26
+R9
+R10
+!i122 752
+R11
+Z147 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/rippleAdder_N.vhd
+Z148 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/rippleAdder_N.vhd
+l0
+L4 1
+VL`8UNLXTOkoF_j=P1ce`11
+!s100 8[TaN<M4K`P[fMHA>nN8J3
+R14
+33
+R15
+!i10b 1
+R16
+Z149 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/rippleAdder_N.vhd|
+Z150 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/rippleAdder_N.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 13 rippleadder_n 0 22 L`8UNLXTOkoF_j=P1ce`11
+!i122 752
+l24
+L14 36
+VK[e<e`oOmBN:VHZYdU8fA1
+!s100 SFPlDhA3AO?nVSQb1X?S63
+R14
+33
+R15
+!i10b 1
+R16
+R149
+R150
+!i113 0
+R19
+R20
+Esignzeroext
+R26
+R8
+R9
+R10
+!i122 763
+R11
+Z151 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/signZeroExt.vhd
+Z152 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/signZeroExt.vhd
+l0
+L5 1
+VF91iFn;LREk>jUNbbJ>i51
+!s100 AC@R80HSYUbndCc2II^<^3
+R14
+33
+R15
+!i10b 1
+R16
+Z153 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/signZeroExt.vhd|
+Z154 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/signZeroExt.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R8
+R9
+R10
+DEx4 work 11 signzeroext 0 22 F91iFn;LREk>jUNbbJ>i51
+!i122 763
+l12
+L11 15
+VVl0_U2@SNU`01Ah_ibP^82
+!s100 5<OT8GO3ZecQa0oUmzeoh0
+R14
+33
+R15
+!i10b 1
+R16
+R153
+R154
+!i113 0
+R19
+R20
+Eslt
+R33
+R8
+R9
+R10
+!i122 760
+R11
+Z155 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/SLT.vhd
+Z156 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/SLT.vhd
+l0
+L5 1
+V>8QYnH]0WeeeKYU;iXlQ:2
+!s100 FC`LzN;9bgOQZ`6L>j0372
+R14
+33
+R15
+!i10b 1
+R16
+Z157 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/SLT.vhd|
+Z158 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/SLT.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R8
+R9
+R10
+DEx4 work 3 slt 0 22 >8QYnH]0WeeeKYU;iXlQ:2
+!i122 760
+l11
+L10 7
+VFWEE2Cn5KWifECJdIOAPo3
+!s100 UAf0EL?UHzOEV;b[Z[<5a1
+R14
+33
+R15
+!i10b 1
+R16
+R157
+R158
+!i113 0
+R19
+R20
+Etb_alu
+Z159 w1729281801
+Z160 DPx3 std 3 env 0 22 g[fj8WJKOa<0Y`zWY3UD70
+Z161 DPx4 ieee 16 std_logic_textio 0 22 8]8<fKiYoHe;_IDO3kmNH2
+R9
+R10
+!i122 781
+R11
+Z162 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/tb_ALU.vhd
+Z163 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/tb_ALU.vhd
+l0
+Z164 L10 1
+V`gng_ZNmglWlOj1C@[Eme2
+!s100 0LBC@V5H@73?8OJ]M;DXL2
+R14
+33
+Z165 !s110 1729281803
+!i10b 1
+Z166 !s108 1729281803.000000
+Z167 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/tb_ALU.vhd|
+Z168 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/tb_ALU.vhd|
+!i113 0
+R19
+R20
+Amixed
+R160
+R161
+R9
+R10
+Z169 DEx4 work 6 tb_alu 0 22 `gng_ZNmglWlOj1C@[Eme2
+!i122 781
+l43
+Z170 L16 75
+Z171 VkCgZV849B2Aj?=Qm[_JY32
+Z172 !s100 PFLKOo2GX_]^5=Xz57fG^3
+R14
+33
+R165
+!i10b 1
+R166
+R167
+R168
+!i113 0
+R19
+R20
+Etb_barrelshifter
+Z173 w1729092158
+R160
+R161
+R9
+R10
+!i122 746
+R11
+Z174 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/tb_barrelshifter.vhd
+Z175 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/tb_barrelshifter.vhd
+l0
+R164
+Vfn>@HlOBT>U]eW?ChD14Q2
+!s100 kFz7AiigGfN]dm0MH6gb_0
+R14
+33
+R42
+!i10b 1
+R43
+Z176 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/tb_barrelshifter.vhd|
+Z177 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/shifter/tb_barrelshifter.vhd|
+!i113 0
+R19
+R20
+Amixed
+R160
+R161
+R9
+R10
+DEx4 work 16 tb_barrelshifter 0 22 fn>@HlOBT>U]eW?ChD14Q2
+!i122 746
+l38
+L16 135
+V8O`F6YoU]^aVFRjzJY8Yc2
+!s100 f[d>MX?ZQS[3WJ9[>@e?^1
+R14
+33
+R42
+!i10b 1
+R43
+R176
+R177
+!i113 0
+R19
+R20
+Etb_ctrl_logic
+Z178 w1729267534
+R160
+R161
+R9
+R10
+!i122 755
+R11
+Z179 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/tb_ctrl_logic.vhd
+Z180 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/tb_ctrl_logic.vhd
+l0
+R164
+VLZ4a;DYW[e]e4O1?f<PnL2
+!s100 6Y`=48k7Gz>iY5BRhCFaf3
+R14
+33
+R15
+!i10b 1
+R16
+Z181 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/tb_ctrl_logic.vhd|
+Z182 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/ctrl_log/tb_ctrl_logic.vhd|
+!i113 0
+R19
+R20
+Amixed
+R160
+R161
+R9
+R10
+DEx4 work 13 tb_ctrl_logic 0 22 LZ4a;DYW[e]e4O1?f<PnL2
+!i122 755
+l48
+L16 98
+VDJR_H8KIlmUcIM>RQAzOk3
+!s100 bc112H]Kl67kn:3o<OUjU0
+R14
+33
+R15
+!i10b 1
+R16
+R181
+R182
+!i113 0
+R19
+R20
+Etb_programcounter
+Z183 w1728490933
+R8
+R9
+R10
+!i122 303
+R133
+Z184 8/home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/testbenches/tb_ProgramCounter.vhd
+Z185 F/home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/testbenches/tb_ProgramCounter.vhd
+l0
+L5 1
+VLS3HH=lmI=SATb2Pif2560
+!s100 hQYOc<HBeQiJciEMaB><`1
+R14
+32
+Z186 !s110 1728490937
+!i10b 1
+Z187 !s108 1728490937.000000
+Z188 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/testbenches/tb_ProgramCounter.vhd|
+Z189 !s107 /home/sforde22/CprE 381/Project 1/MIPS-Processor-CprE-381/Project 1/testbenches/tb_ProgramCounter.vhd|
+!i113 0
+R89
+R20
+Amixed
+R8
+R9
+R10
+DEx4 work 17 tb_programcounter 0 22 LS3HH=lmI=SATb2Pif2560
+!i122 303
+l22
+L8 53
+Vm@Vb;Ib>>inX7YUjJIcUG2
+!s100 aTD:az6zUa3FQOJXH_:aI0
+R14
+32
+R186
+!i10b 1
+R187
+R188
+R189
+!i113 0
+R89
+R20
+Exorg2
+R26
+R9
+R10
+!i122 772
+R11
+Z190 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorg2.vhd
+Z191 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorg2.vhd
+l0
+R29
+VOZPm5jBoVdPDb7[3zWzZD2
+!s100 [hI[mXFH4_j16U;>U1Lfn2
+R14
+33
+R15
+!i10b 1
+R16
+Z192 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorg2.vhd|
+Z193 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorg2.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R9
+R10
+DEx4 work 5 xorg2 0 22 OZPm5jBoVdPDb7[3zWzZD2
+!i122 772
+l32
+R32
+V7_ZYiRRQelNmCooYeK?5e0
+!s100 Z6[FAPS4fBLB`F?OO<AY72
+R14
+33
+R15
+!i10b 1
+R16
+R192
+R193
+!i113 0
+R19
+R20
+Exorgn
+R33
+R9
+R10
+!i122 773
+R11
+Z194 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorgN.vhd
+Z195 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorgN.vhd
+l0
+L4 1
+VMaCY5F;FcoNa1POZ@lmRU0
+!s100 cXPnIk?K46ATJ3a3DDeQO2
+R14
+33
+R15
+!i10b 1
+R16
+Z196 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorgN.vhd|
+Z197 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/gates/xorgN.vhd|
+!i113 0
+R19
+R20
+Astructural
+R9
+R10
+DEx4 work 5 xorgn 0 22 MaCY5F;FcoNa1POZ@lmRU0
+!i122 773
+l20
+R38
+VMfFbfe;[7amD>VZDS=FhK1
+!s100 j5b:on_g<Lz8Y5PRz2W?`2
+R14
+33
+R15
+!i10b 1
+R16
+R196
+R197
+!i113 0
+R19
+R20
+Ezerodetect
+R33
+R8
+R9
+R10
+!i122 761
+R11
+Z198 8/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/zeroDetect.vhd
+Z199 F/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/zeroDetect.vhd
+l0
+L5 1
+VSZPi02=HgeZY`WYajE5ko3
+!s100 lm9XBVHAnIaiARU@UbhVR2
+R14
+33
+R15
+!i10b 1
+R16
+Z200 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/zeroDetect.vhd|
+Z201 !s107 /home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1/datapath/alu/zeroDetect.vhd|
+!i113 0
+R19
+R20
+Adataflow
+R8
+R9
+R10
+DEx4 work 10 zerodetect 0 22 SZPi02=HgeZY`WYajE5ko3
+!i122 761
+l14
+L10 17
+V0e=JecS]SSic91Yb_iB=i1
+!s100 7VQ?55m@UH@<7KBle2zV?0
+R14
+33
+R15
+!i10b 1
+R16
+R200
+R201
+!i113 0
+R19
+R20

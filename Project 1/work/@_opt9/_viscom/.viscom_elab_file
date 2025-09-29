@@ -1,0 +1,1 @@
+/usr/local/mentor/questasim/linux_x86_64/VisualizerRls/bin/viscom -nolock -quiet -jmem_size 18825504 work.tb_alu(mixed) -quiet -auto_acc_if_foreign -work work +acc -allow_unnamed -o _opt9 -id 2-6805ca47c761-6712becd-dfe56-7c4b {+__design_bin_path+/home/eliv/cpre381/proj1/MIPS-Processor-CprE-381/Project 1} +__betafsm
